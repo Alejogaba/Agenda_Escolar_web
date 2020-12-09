@@ -1,0 +1,89 @@
+    <nav class="navbar-expand-lg bg-primary">
+      <br>
+      <h1><strong>Gestionar cursos</strong></h1>
+  </nav>
+  <br>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="md-form" >
+            <h5 position="stacked">Detalles del curso</h5>
+            <textarea class="md-textarea" 
+              disabled
+              readonly
+              rows="7"
+              >{{textoTextarea}}
+            </textarea>
+            <br>
+            <select class="form-control" placeholder="Seleccione un curso..." [(ngModel)]="idCursoSeleccionado" (change)="seleccionCurso()">
+              <option value="" >Seleccione un curso...</option>
+              <option id="SelecionarCurso" *ngFor="let curso of listaCursos" 
+               value="{{curso.id}}" >
+               {{curso.nombre}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="px-3" class="col-sm-12">
+          <h5 position="stacked">Registrar curso</h5>
+          <form>
+            <div class="form-group">
+              <label for="selectNombreGrado">Grado del curso</label>
+              <select class="form-control" placeholder="Grado" name="grado" id="selectNombreGrado" [(ngModel)]="curso.id_grado" [disabled]="inputNombreMode">
+                <option value="">Seleccione un grado...</option>
+                <option *ngFor="let grado of listaGrados"  value="{{grado.id}}">{{grado.nombre}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inputNombreCurso">Nombre del curso</label>
+              <input class="form-control" (keyup.enter)="guardarCurso()" name="nombre" Placeholder="Nombre del curso" id="inputNombreCurso" [disabled]="inputNombreMode" [(ngModel)]="curso.nombre" autocapitalize="on" autocomplete="off"  (ngModelChange)="curso.nombre = $event.toUpperCase()" type="name" >  
+            </div>
+          
+            <div class="container pl-5 py-4 container-btn justify-content-md-center">
+              <div class="row">
+                <div class="col-lg-3 col-md-3 mt-1 col-sm-6 col-xs-12" >
+                  <button class="btn btn-primary btn-lg" (click)="guardarCurso()" >Guardar (icono)</button>
+                </div >
+                <div class="col-lg-3 col-md-3 col-sm-6 mt-1 col-xs-12">
+                  <button class="btn btn-primary btn-lg" (click)="limpiar()">Limpiar (icono)</button>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12 mt-1 col-xs-12">
+                  <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal" [disabled]="!inputNombreMode">Eliminar (icono)</button>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 mt-1 col-xs-12">
+                  <button class="btn btn-primary btn-lg" (click)="volver()">Volver</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ADVERTENCIA</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿Esta seguro que desea eliminar el curso?<br> todos los alumnos relacionados también seran eliminados
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger mr-3" data-dismiss="modal" (click)="eliminarCurso()">Eliminar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  

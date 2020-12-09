@@ -1,0 +1,60 @@
+
+<!-- REGISTRATION FORM -->
+<div class="text-center" style="padding:50px 0">
+	<div class="logo">Registro de docente</div>
+	<!-- Main Form -->
+	<div class="login-form-1">
+		<form id="register-form" class="text-left conatiner">
+			<div class="login-form-main-message"></div>
+			<div class="main-login-form">
+				<div class="login-group row">
+					<div class="col-sm-6">
+                        <div class="form-group">
+                          
+                          <input class="form-control" name="idDocente" id="inputIdDocente" placeholder="Número de identificación" type="number" [disabled]="inputNombreMode" [(ngModel)]="docente.id" >  
+                        </div>
+                       <div class="form-group">
+                      
+                        <input class="form-control" name="nombreDocente" id="inputNombreDocente" placeholder="Nombres" type="name" [(ngModel)]="docente.nombres" >
+                       </div>
+                        <div class="form-group">
+                          <input class="form-control" name="apellidoDoc" id="inputApellidosDocente" placeholder="Apellidos" type="name"[(ngModel)]="docente.apellidos" >  
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                              <input class="form-control" placeholder="Fecha de nacimiento (aaaa-mm-dd)"
+                                     name="dp" [(ngModel)]="docente.fecha_nacimiento" [minDate]="minDate" [startDate]="{month: 1, year: 2000}"
+                                     [maxDate]="maxDate" ngbDatepicker #d="ngbDatepicker">
+                              <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">Calendario</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      <div class="col-sm-6">
+                        
+    
+                        <div class="form-group">
+                          <input class="form-control" name="telDocente" id="inputTelefonoDocente" placeholder="Número de télefono o celular" type="number" [(ngModel)]="docente.telefono" value="0">  
+                        </div>
+                        <div class="form-group">
+                          <input class="form-control" name="correoDocente" id="inputCorreoDocente" placeholder="Correo electrónico" type="name" autocomplete="off" [disabled]="inputNombreMode" [(ngModel)]="docente.correo_electronico">  
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="correoDocentep" id="inputPassword" placeholder="Contraseña" type="password" autocomplete="off" [disabled]="inputNombreMode">  
+                          </div>
+                          <div class="form-group">
+                            <input class="form-control" name="password2" id="inputPassword2" placeholder="Repita su contraseña" type="password" autocomplete="off" [(ngModel)]="password" [disabled]="inputNombreMode">  
+                          </div>
+                       </div>
+                       
+                   
+				</div>
+				<button type="submit" (click)="guardarDocente" class="login-button"><i class="fa fa-chevron-right"></i></button>
+			</div>
+		
+		</form>
+	</div>
+	<!-- end:Main Form -->
+</div>

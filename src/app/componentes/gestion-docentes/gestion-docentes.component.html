@@ -1,0 +1,121 @@
+<nav class="navbar-expand-lg bg-primary">
+    <br>
+    <h1><strong>Gestionar docentes</strong></h1>
+</nav>
+<br>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="md-form" >
+          <h5 position="stacked">Detalles del docente</h5>
+          <textarea class="md-textarea" 
+            disabled
+            readonly
+            rows="7"
+            >{{textoTextarea}}
+          </textarea>
+          <br>
+          <form>
+            <label for="inputBuscarDocente">Buscar docente</label>
+            <input class="form-control" [(ngModel)]="idDocenteSeleccionado" id="inputBuscarDocente" name="inputbuscardocente" type="number" min="0" max="0" placeholder="Ingrese la identificación del docente">
+            <button class="btn btn-primary mt-2" (click)="buscarDocente()">Buscar (icono)</button>
+          </form>
+          
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="px-3" class="col-sm-12">
+        <h5 position="stacked">Registrar docente</h5>
+        <form>
+          <div class="container">
+            <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="inputIdDocente">Identificación</label>
+                      <input class="form-control" name="idDocente" id="inputIdDocente" placeholder="Número de identificación" type="number" [disabled]="inputNombreMode" [(ngModel)]="docente.id" >  
+                    </div>
+                   <div class="form-group">
+                    <label for="inputNombreDocente">Nombres</label>
+                    <input class="form-control" name="nombreDocente" id="inputNombreDocente" placeholder="Nombres del docente" type="name" [(ngModel)]="docente.nombres" >
+                   </div>
+                    <div class="form-group">
+                      <label for="inputApellidosDocente">Apellidos</label>
+                      <input class="form-control" name="apellidoDoc" id="inputApellidosDocente" placeholder="Apellidos del docente" type="name"[(ngModel)]="docente.apellidos" >  
+                    </div>
+                    </div>
+                    
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="inputfecha">Fecha de nacimiento</label>
+                      <div class="input-group">
+                        <input class="form-control" placeholder="aaaa-mm-dd"
+                               name="dp" [(ngModel)]="docente.fecha_nacimiento" ngbDatepicker #d="ngbDatepicker">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="inputTelefonoDocente">Télefono/celular</label>
+                      <input class="form-control" name="telDocente" id="inputTelefonoDocente" placeholder="Número de télefono o celular" type="number" [(ngModel)]="docente.telefono" value="0">  
+                    </div>
+                    <div class="form-group">
+                      <label for="inputCorreoDocente">Correo electrónico</label>
+                      <input class="form-control" (keyup.enter)="guardarDocente()" name="correoDocente" id="inputCorreoDocente" placeholder="Correo electrónico" type="name" [disabled]="inputNombreMode" [(ngModel)]="docente.correo_electronico">  
+                    </div>
+                   </div>
+            </div>
+          </div>
+        
+          <div class="container pl-5 py-4 container-btn justify-content-md-center">
+            <div class="row">
+              <div class="col-lg-3 col-md-3 mt-1 col-sm-6 col-xs-12" >
+                <button class="btn btn-primary btn-lg" (click)="guardarDocente()" >Guardar (icono)</button>
+              </div >
+              <div class="col-lg-3 col-md-3 col-sm-6 mt-1 col-xs-12">
+                <button class="btn btn-primary btn-lg" (click)="limpiar()">Limpiar (icono)</button>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-12 mt-1 col-xs-12">
+                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal" [disabled]="!inputNombreMode">Eliminar (icono)</button>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 mt-1 col-xs-12">
+                <button class="btn btn-primary btn-lg" (click)="volver()">Volver</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">ADVERTENCIA</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      ¿Esta seguro que desea eliminar el docente?<br>la cuenta asociada también sera eliminada y no podra acceder a la plataforma
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger mr-3" data-dismiss="modal" (click)="eliminarDocente()">Eliminar</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+  
+  
+  

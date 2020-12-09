@@ -1,0 +1,42 @@
+
+<div class="container">
+    <div class="row">
+      <h6>Lista de notas</h6>
+      <div *ngFor="let periodo of listaPeriodos" class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+       <label>Periodo: {{periodo.periodo}}</label>
+        <table  class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Nota</th>
+                    <th scope="col">Porcentaje</th>
+                    <th scope="col">fecha</th>
+                  </tr>
+                </thead>
+                <tr *ngFor="let nota of listaNotas" scope="row" >
+                  <td>{{nota.comentario}}</td>
+                  <td>{{nota.calificacion}}</td>
+                  <td>{{nota.porcentaje}}%</td>
+                  <td>{{nota.fecha_registro}}</td>
+                 </tr>
+                <thead class="thead-light">
+                </thead>
+              </table>
+  |      <label>Promedio: {{periodo.total}}</label>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-7">  <select class="form-control"  placeholder="Seleccione una asignatura..." [(ngModel)]="idAsignaturaSeleccionada">
+        <option value="">Seleccione una asignatura...</option>
+        <option *ngFor="let asignatura of listaAsignaturas" value="{{asignatura.id}}">{{asignatura.nombre}}</option>
+      </select></div>
+      
+      <div class="col-sm-5"><button (click)="cargarDatos()">Consultar</button></div>
+    </div>
+  
+  </div>
+  
+  
+  
+  
+  
