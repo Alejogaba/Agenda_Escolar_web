@@ -80,8 +80,7 @@ export class GestionAlumnosComponent implements OnInit {
         this.alumno=docente as Alumno;
         this.inputNombreMode=true;
         }else{
-        this.limpiar();
-        
+        this.globalService.showInfo("No se encontro el alumno");
         }
       });
     } catch (error) {

@@ -29,7 +29,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css" 
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js"
@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "AgendaEscolar"
+  "defaultProject": "AgendaEscolar",
+  "cli": {
+    "analytics": "b99c50c6-d8ce-4e8d-9f9f-b9566d5b3dda"
+  }
 }

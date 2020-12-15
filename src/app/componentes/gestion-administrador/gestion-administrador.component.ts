@@ -82,7 +82,7 @@ export class GestionAdministradorComponent implements OnInit {
         this.administrador=administrador as Administrador;
         this.inputNombreMode=true;
         }else{
-        this.limpiar();
+        this.globalService.showInfo("No se encontro el administrador");
         
         }
       });

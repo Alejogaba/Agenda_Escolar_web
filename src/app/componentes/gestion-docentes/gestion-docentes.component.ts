@@ -84,8 +84,7 @@ export class GestionDocentesComponent implements OnInit {
         this.docente=docente as Docente;
         this.inputNombreMode=true;
         }else{
-        this.limpiar();
-        
+          this.globalService.showInfo("No se encontro el docente");
         }
       });
     } catch (error) {
