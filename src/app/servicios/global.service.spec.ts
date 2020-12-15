@@ -10,7 +10,4 @@ describe('GlobalService', () => {
     service = TestBed.inject(GlobalService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
 });

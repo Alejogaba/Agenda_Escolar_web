@@ -90,7 +90,7 @@ export class CursosService {
         rejects("No deje campos vacios")
       }else{
         this.db.collection("Cursos").doc(curso.id).delete().then(res=>{
-          resolve("Se elimino correctamente el curso "+curso.nombre);
+          resolve("ok");
         }).catch(er=>{
           rejects("El curso no existe");
         })

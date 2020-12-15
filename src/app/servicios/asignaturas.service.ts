@@ -76,7 +76,7 @@ export class AsignaturasService {
         rejects("No deje campos vacios")
       }else{
         this.db.collection("Asignaturas").doc(asignatura.id).delete().then(res=>{
-          resolve("Se elimino correctamente la asignatura "+asignatura.nombre);
+          resolve("ok");
         }).catch(er=>{
           rejects("La asignatura no existe");
         })

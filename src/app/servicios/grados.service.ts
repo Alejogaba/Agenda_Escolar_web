@@ -82,7 +82,7 @@ getGrado(grado_id:string):Grado{
         rejects("No deje campos vacios")
       }else{
         this.db.collection("Grados").doc(grado.id).delete().then(res=>{
-          resolve("Se elimino correctamente el grado "+grado.nombre);
+          resolve("ok");
         }).catch(er=>{
           rejects("Ha ocurrido un error o el grado no existe");
         })

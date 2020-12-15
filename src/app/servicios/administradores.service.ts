@@ -26,6 +26,10 @@ export class AdministradoresService {
     return this.db.collection(this.collectionName).doc(id_administrador).valueChanges();
   }
 
+  buscarAdministrados(id_administrador:string){
+    return null;
+  }
+
 
   sendtoFirebase(administrador:Administrador){
     return new Promise((resolve,rejects)=>{
@@ -37,23 +41,27 @@ export class AdministradoresService {
           ||administrador.telefono<10000000||administrador.telefono>99999999999){
           rejects("Cantidad incorrecta de caracteres")
         }else{
-          if(false){
+          if(this.validaEdad()){
             rejects("Edad no válida")
           }else{
             if(!this.validarCorreo(administrador.correo_electronico)){
               rejects("Por favor ingrese un correo válido")
             }else{
-              this.db.collection(this.collectionName).doc(administrador.id.toString()).set({
-                id: administrador.id,
-                nombres: administrador.nombres,
-                apellidos: administrador.apellidos,
-                telefono: administrador.telefono,
-                correo_electronico: administrador.correo_electronico
-               }).then(res=>{
-                resolve("ok")
-              }).catch(err=>{
-                rejects("No se pudo guardar el administrador\nError:"+err);
-              })
+              if(this.buscarAdministrados(administrador.id)!=null){
+                rejects("Ya existe ese administrador")
+              }else{
+                this.db.collection(this.collectionName).doc(administrador.id.toString()).set({
+                  id: administrador.id,
+                  nombres: administrador.nombres,
+                  apellidos: administrador.apellidos,
+                  telefono: administrador.telefono,
+                  correo_electronico: administrador.correo_electronico
+                 }).then(res=>{
+                  resolve("ok")
+                }).catch(err=>{
+                  rejects("No se pudo guardar el administrador\nError:"+err);
+                })
+              }
             }
           }  
         }
@@ -72,6 +80,10 @@ export class AdministradoresService {
 
   validarCorreo(correo:string):boolean{
     return true;
+  }
+
+  validaEdad(){
+    return false;
   }
   
   validarEdad(edad:number):boolean{

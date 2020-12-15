@@ -28,6 +28,10 @@ export class DocentesService {
     return this.db.collection(this.collectionName).doc(id_docente).valueChanges();
   }
 
+  buscarDocente(id_docente:string){
+    return null;
+  }
+
 
   sendtoFirebase(docente:Docente){
     return new Promise((resolve,rejects)=>{
@@ -44,19 +48,23 @@ export class DocentesService {
             if(!this.validarCorreo(docente.correo_electronico)){
               rejects("Por favor ingrese un correo válido")
             }else{
-              this.db.collection(this.collectionName).doc(docente.id.toString()).set({
-                id: docente.id,
-                idAsignatura: docente.idAsignatura,
-                nombres: docente.nombres,
-                apellidos: docente.apellidos,
-                fecha_nacimiento: docente.fecha_nacimiento,
-                telefono: docente.telefono,
-                correo_electronico: docente.correo_electronico
-               }).then(res=>{
-                resolve("ok")
-              }).catch(err=>{
-                rejects("No se pudo guardar el docente\nError:"+err);
-              })
+              if(this.buscarDocente(docente.id)!=null){
+                rejects("Este docente ya existe");
+              }else{
+                this.db.collection(this.collectionName).doc(docente.id.toString()).set({
+                  id: docente.id,
+                  idAsignatura: docente.idAsignatura,
+                  nombres: docente.nombres,
+                  apellidos: docente.apellidos,
+                  fecha_nacimiento: docente.fecha_nacimiento,
+                  telefono: docente.telefono,
+                  correo_electronico: docente.correo_electronico
+                 }).then(res=>{
+                  resolve("ok")
+                }).catch(err=>{
+                  rejects("No se pudo guardar el docente\nError:"+err);
+                })
+              }
             }
           }  
         }

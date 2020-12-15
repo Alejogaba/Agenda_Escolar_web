@@ -49,6 +49,10 @@ export class AlumnosService {
     return this.db.collection(this.collectionName).doc(id_alumno).valueChanges();
   }
 
+  buscarAlumno(id_alumno:string){
+    return null;
+  }
+
 
   sendtoFirebase(alumno:Alumno){
     return new Promise((resolve,rejects)=>{
@@ -65,19 +69,23 @@ export class AlumnosService {
             if(!this.validarCorreo(alumno.correo_electronico)){
               rejects("Por favor ingrese un correo válido")
             }else{
-              this.db.collection("Alumnos").doc(alumno.id.toString()).set({
-                id: alumno.id,
-                idCurso: alumno.idCurso,
-                nombres: alumno.nombres,
-                apellidos: alumno.apellidos,
-                edad: alumno.fecha_nacimiento,
-                telefono: alumno.telefono,
-                correo_electronico: alumno.correo_electronico
-               }).then(res=>{
-                resolve("ok")
-              }).catch(err=>{
-                rejects("No se pudo guardar el alumno\nError:"+err);
-              })
+              if(this.buscarAlumno(alumno.id)!=null){
+                rejects("Ya existe un alumno con ese numero de identificación");
+              }else{
+                this.db.collection("Alumnos").doc(alumno.id.toString()).set({
+                  id: alumno.id,
+                  idCurso: alumno.idCurso,
+                  nombres: alumno.nombres,
+                  apellidos: alumno.apellidos,
+                  edad: alumno.fecha_nacimiento,
+                  telefono: alumno.telefono,
+                  correo_electronico: alumno.correo_electronico
+                 }).then(res=>{
+                  resolve("ok")
+                }).catch(err=>{
+                  rejects("No se pudo guardar el alumno\nError:"+err);
+                })
+              }
             }
           }  
         }
