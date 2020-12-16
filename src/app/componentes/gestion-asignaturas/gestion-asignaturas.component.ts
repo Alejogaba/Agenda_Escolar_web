@@ -4,6 +4,7 @@ import { Asignatura } from 'src/app/models/asignatura';
 import { AsignaturasService } from 'src/app/servicios/asignaturas.service';
 import {Location} from '@angular/common';
 import { GlobalService } from 'src/app/servicios/global.service';
+import { AngularFirePerformance } from '@angular/fire/performance';
 
 @Component({
   selector: 'app-gestion-asignaturas',
@@ -20,7 +21,7 @@ export class GestionAsignaturasComponent implements OnInit {
 
 
   constructor(private router:Router, private asignaturaService:AsignaturasService, private location:Location,
-    private globalService:GlobalService) { }
+    private globalService:GlobalService,private perfService:AngularFirePerformance) { }
 
   ngOnInit() {
 
@@ -32,13 +33,16 @@ export class GestionAsignaturasComponent implements OnInit {
   }
 
   cargarAsignaturas() {
-    this.asignaturaService.getAsignaturas().subscribe(asignaturas=>{
+    this.asignaturaService.getAsignaturas().subscribe( async asignaturas=>{
+      const trace = await this.perfService.trace("CargarAsignaturas");
+      trace.start();
       this.listaAsignaturas = asignaturas;
       asignaturas.forEach(async element => {
         if(element.nombre!=null)
         this.textoTextarea=this.textoTextarea+"\n"+element.nombre;
       });
-    })
+      trace.stop;
+    },)
   }
   
   guardarAsignatura(){

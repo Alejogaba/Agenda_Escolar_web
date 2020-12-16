@@ -3,7 +3,17 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { firebaseConfig } from "../environments/environment";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAWkkL4gLhOjrcSVbLfhEMlN1R_NmUirw8",
+  authDomain: "agenda-escolar-20dec.firebaseapp.com",
+  databaseURL: "https://agenda-escolar-20dec.firebaseio.com",
+  projectId: "agenda-escolar-20dec",
+  storageBucket: "agenda-escolar-20dec.appspot.com",
+  messagingSenderId: "291275685273",
+  appId: "1:291275685273:web:7eda530e640218322aa708",
+  measurementId: "G-GYYWS46NKE"
+};
 
 import { AngularFireModule } from "@angular/fire";
 import { AngularFireAuthModule } from "@angular/fire/auth";
@@ -25,7 +35,7 @@ import { RegistroUsuarioDocenteComponent } from './componentes/registro-usuario-
 import { RegistroEleccionUsuarioComponent } from './componentes/registro-eleccion-usuario/registro-eleccion-usuario.component';
 import { RegistroUsuarioAlumnoComponent } from './componentes/registro-usuario-alumno/registro-usuario-alumno.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { AngularFirePerformanceModule, PerformanceMonitoringService } from '@angular/fire/performance';
 import { ToastrModule } from 'ngx-toastr';
 
 
@@ -56,9 +66,10 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirePerformanceModule,
     AngularFireAuthModule
   ],
-  providers: [],
+  providers: [PerformanceMonitoringService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

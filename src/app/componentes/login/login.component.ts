@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirePerformance } from '@angular/fire/performance';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/servicios/auth.service';
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
   autohide = true;
   usuario:Usuario=new Usuario("","","","");
   
-  constructor(private authService:AuthService,public router:Router,
+  constructor(private authService:AuthService, private performanceService:AngularFirePerformance, public router:Router,
     private usuarioService:UsuariosService,private globalService:GlobalService) { 
      
     }
@@ -59,7 +60,8 @@ export class LoginComponent implements OnInit {
     if(false/*this.verificarRol(this.email,this.role)*/){
      // this.presentToastCustom(this.verificarRol(this.email,this.role),"danger");
     }else{
-      this.authService.login(this.email,this.password,this.role).then(res=>{
+      this.authService.login(this.email,this.password,this.role).then( res=>{
+        this.performanceService.trace("Inicio de sesion");
         console.log("login");
         this.globalService.showSuccess("Inicio de sesión correcto");
           switch (this.role) {
