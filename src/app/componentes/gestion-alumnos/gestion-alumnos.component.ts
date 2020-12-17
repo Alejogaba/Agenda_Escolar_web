@@ -5,8 +5,9 @@ import { AlumnosService } from 'src/app/servicios/alumnos.service';
 import { AuthService } from 'src/app/servicios/auth.service';
 import {CursosService} from 'src/app/servicios/cursos.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
-import {Location} from '@angular/common';
+import {formatDate, Location} from '@angular/common';
 import { GlobalService } from 'src/app/servicios/global.service';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-gestion-alumnos',
@@ -17,12 +18,13 @@ export class GestionAlumnosComponent implements OnInit {
   currentNumber:Number|null=null;
   idAlumnoSeleccionado:string="";
   listaAlumnos:any = [];
+  listaCursos:any = [];
   inputNombreMode:boolean=false;
   alumno:Alumno=new Alumno("","","","",null,null,"");
   textoTextarea:string|null="Lista de alumnos:";
 
   constructor(private alumnoService:AlumnosService, private authService:AuthService,
-     private usuarioService:UsuariosService, private location:Location, private globalService:GlobalService
+    private cursoService:CursosService,private usuarioService:UsuariosService, private location:Location, private globalService:GlobalService
      ) { }
 
   ngOnInit():void {
@@ -30,6 +32,7 @@ export class GestionAlumnosComponent implements OnInit {
     this.limpiar();
     this.idAlumnoSeleccionado="";
     this.inputNombreMode=false;
+    this.cargarCursos();
   
   }
 
@@ -43,6 +46,13 @@ export class GestionAlumnosComponent implements OnInit {
     })
   }
   
+
+  cargarCursos() {
+    this.cursoService.getCursos().subscribe(cursos=>{
+      this.listaCursos = cursos;
+    })
+  }
+
   guardarAlumno(){
     if(!this.inputNombreMode){
       this.alumnoService.sendtoFirebase(this.alumno).then(res=>{
@@ -75,6 +85,7 @@ export class GestionAlumnosComponent implements OnInit {
     }else{
       this.alumnoService.sendtoFirebase(this.alumno).then(res=>{
         console.log("Se actualizo el alumno con exitó");
+        this.globalService.showSuccess("Se actualizon el alumno con exitó");
       }).catch(err=>{
         console.log(err);
         this.globalService.showError(err);
@@ -85,10 +96,17 @@ export class GestionAlumnosComponent implements OnInit {
 
   buscarAlumno(){
     try {
-      this.alumnoService.getAlumno(this.idAlumnoSeleccionado.toString()).subscribe(docente=>{
-        if(docente!=null){
-        this.alumno=docente as Alumno;
+      this.alumnoService.getAlumno(this.idAlumnoSeleccionado.toString()).subscribe(alumno=>{
+        if(alumno!=null){
+        this.alumno=alumno as Alumno;
         this.inputNombreMode=true;
+        this.textoTextarea="Datos del alumno"
+    setTimeout(() => {
+      if(this.alumno.fecha_nacimiento!=null)
+      this.textoTextarea="Nombre: "+this.alumno.nombres+" "+this.alumno.apellidos+"\n"+
+      "Identificación: "+this.alumno.id+"\n"+
+      "Fecha de nacimiento: "+formatDate(this.alumno.fecha_nacimiento?.toString(), 'dd/MM/yyyy', 'en');;
+         }, 500);
         }else{
         this.globalService.showInfo("No se encontro el alumno");
         }

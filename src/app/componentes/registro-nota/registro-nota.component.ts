@@ -13,7 +13,7 @@ import { GlobalService } from 'src/app/servicios/global.service';
 })
 export class RegistroNotaComponent implements OnInit {
 
-  calificacion:Calificacion=new Calificacion("","","","",0,0,0,"");
+  calificacion:Calificacion=new Calificacion("","","1074321423","",0,0,0,"");
   listaAlumnos:any = [];
   listaAsignaturas:any = [];
   listaCursos:any = [];
@@ -26,7 +26,7 @@ export class RegistroNotaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.calificacion = new Calificacion("","",localStorage.getItem("idUser"),"",0,0,0,"")
+    this.calificacion = new Calificacion("","","1074321423","",0,0,0,"")
     this.cargarAlumnos();
     this.cargarCursos();
     this.cargarAsignaturas();
@@ -62,7 +62,7 @@ export class RegistroNotaComponent implements OnInit {
   }
 
   limpiar(){
-    this.calificacion = new Calificacion("","","","",0,0,0,"");
+    this.calificacion = new Calificacion("","","1074321423","",0,0,0,"");
   }
 
 }

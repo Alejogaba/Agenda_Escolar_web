@@ -45,6 +45,15 @@
                       <label for="inputApellidosDocente">Apellidos</label>
                       <input class="form-control" name="apellidoDoc" id="inputApellidosDocente" placeholder="Apellidos del alumno" type="name"[(ngModel)]="alumno.apellidos" >  
                     </div>
+                    <div class="form-group">
+                      <label for="selectNombreGrado">Curso</label>
+                      <select class="form-control" placeholder="Seleccione un curso..." [(ngModel)]="alumno.idCurso">
+                        <option value="" >Seleccione un curso...</option>
+                        <option id="SelecionarCurso" *ngFor="let curso of listaCursos" 
+                         value="{{curso.id}}" >
+                         {{curso.nombre}}</option>
+                      </select>
+                    </div>
                     </div>
                     
                   <div class="col-sm-6">

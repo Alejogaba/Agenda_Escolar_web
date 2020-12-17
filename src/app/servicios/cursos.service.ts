@@ -44,7 +44,7 @@ export class CursosService {
         if(curso.nombre.length<5){
           rejects("Cantidad insuficiente de caracteres")
         }else{
-           if(curso.id==null){
+           if(curso.id==null||curso.id==""){
             this.db.collection("Cursos").doc(this.db.createId()).set({
               id_grado: curso.id_grado,
               nombre : curso.nombre,

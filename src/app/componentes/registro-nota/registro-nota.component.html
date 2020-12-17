@@ -18,7 +18,7 @@
                 
                   <div class="form-group">
                     <label for="curso">Curso</label>
-                    <select name="curso" class="form-control"  placeholder="Seleccione una curso..." [(ngModel)]="calificacion.idCurso">
+                    <select name="curso" id="curso" class="form-control"  placeholder="Seleccione una curso..." [(ngModel)]="calificacion.idCurso">
                       <option value="">Seleccione una curso...</option>
                       <option *ngFor="let curso of listaCursos" value="{{curso.id}}">{{curso.nombre}}</option>
                     </select>
@@ -26,7 +26,7 @@
 
                   <div class="form-group">
                     <label for="alumno">Alumno</label>
-                    <select name="alumno" class="form-control" placeholder="Alumno" [(ngModel)]="calificacion.idAlumno">
+                    <select name="alumno" id="alumno" class="form-control" placeholder="Alumno" [(ngModel)]="calificacion.idAlumno">
                       <option value="">Seleccione un alumno...</option>
                       <option *ngFor="let alumno of listaAlumnos" value="{{alumno.id}}">{{alumno.nombres}}</option>
                     </select>
@@ -53,7 +53,7 @@
                   </div>
 
                   
-                  <button class="col-sm-6 btn btn-primary mr-5" (click)="guardarCalificacion()">Guardar </button>
+                  <button class="col-sm-6 btn btn-primary mr-5" name="btnguardar" (click)="guardarCalificacion()">Guardar </button>
                   <button class="col-sm-6 btn btn-primary ml-2" (click)="limpiar()">Limpiar</button>
 
                </form>

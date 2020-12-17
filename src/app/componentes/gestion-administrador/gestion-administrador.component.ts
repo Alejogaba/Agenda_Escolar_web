@@ -77,6 +77,7 @@ export class GestionAdministradorComponent implements OnInit {
     }else{
       this.administradorService.sendtoFirebase(this.administrador).then(res=>{
         console.log("Se guardo el coordinador con exitó");
+        this.globalService.showSuccess("Se modifico el coordinador con exitó");
       }).catch(err=>{
         this.globalService.showError(err);
         console.log(err);

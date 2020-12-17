@@ -37,7 +37,7 @@ import { RegistroUsuarioAlumnoComponent } from './componentes/registro-usuario-a
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFirePerformanceModule, PerformanceMonitoringService } from '@angular/fire/performance';
 import { ToastrModule } from 'ngx-toastr';
-
+import { Mugan86GoogleAnalyticsModule } from 'mugan86-ng-google-analytics';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,13 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirePerformanceModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    Mugan86GoogleAnalyticsModule.forRoot(
+      {
+        analyticsId: 'UA-158164314-1',
+        showLog: true
+      }
+    )
   ],
   providers: [PerformanceMonitoringService],
   bootstrap: [AppComponent]

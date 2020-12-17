@@ -19,7 +19,7 @@
           <form>
             <label for="inputBuscarDocente">Buscar docente</label>
             <input class="form-control" (keyup.enter)="buscarDocente()" [(ngModel)]="idDocenteSeleccionado" id="inputBuscarDocente" name="inputbuscardocente" type="number" min="0" max="0" placeholder="Ingrese la identificación del docente">
-            <button class="btn-asignar btn-lg btn-primary mt-2" (click)="buscarDocente()">Buscar  <img src="../../../assets/Iconos/search.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini-2" ></button>
+            <button class="btn-asignar btn-lg btn-primary mt-2" name="btnbuscardocente"  (click)="buscarDocente()">Buscar  <img src="../../../assets/Iconos/search.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini-2" ></button>
           </form>
 
           <br>
@@ -28,14 +28,14 @@
 
           <div class="container-fluid">
             <div class="row">
-              <select [disabled]="!inputNombreMode"  class="form-control col-sm-8" placeholder="Seleccione una asignatura..." [(ngModel)]="idAsignaturaSeleccionada" (change)="seleccionAsignatura()">
+              <select [disabled]="!inputNombreMode" name="selectasignar"  class="form-control col-sm-8" placeholder="Seleccione una asignatura..." [(ngModel)]="idAsignaturaSeleccionada" (change)="seleccionAsignatura()">
                 <option value="" >Seleccione una asignatura...</option>
                 <option id="seleccionAsignatura" *ngFor="let asignatura of listaAsignaturas" 
                  value="{{asignatura.nombre}}" >
                  {{asignatura.nombre}}</option>
               </select>
               <div class="col-sm-4" >
-                <button [disabled]="!inputNombreMode" class=" btn-primary btn-lg btn-asignar" (click)="asignarAsignatura()" >Asignar</button>
+                <button [disabled]="!inputNombreMode" name="btnAsignar" class=" btn-primary btn-lg btn-asignar" (click)="asignarAsignatura()" >Asignar</button>
               </div >
             </div>
           </div>
@@ -59,7 +59,7 @@
                    </div>
                     <div class="form-group">
                       <label for="inputApellidosDocente">Apellidos</label>
-                      <input class="form-control" name="apellidoDoc" id="inputApellidosDocente" placeholder="Apellidos del docente" type="name"[(ngModel)]="docente.apellidos" >  
+                      <input class="form-control" name="apellidoDocente" id="inputApellidosDocente" placeholder="Apellidos del docente" type="name"[(ngModel)]="docente.apellidos" >  
                     </div>
                     </div>
                     
@@ -67,8 +67,7 @@
                     <div class="form-group">
                       <label for="inputfecha">Fecha de nacimiento</label>
                       <div class="input-group">
-                        <input class="form-control" [disabled]="inputNombreMode" placeholder="aaaa-mm-dd"
-                               name="dp" [(ngModel)]="docente.fecha_nacimiento" ngbDatepicker #d="ngbDatepicker">
+                        <input class="form-control" [disabled]="inputNombreMode" placeholder="aaaa-mm-dd" name="inputfecha" [(ngModel)]="docente.fecha_nacimiento" ngbDatepicker #d="ngbDatepicker">
                         <div class="input-group-append">
                           <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
                         </div>
@@ -77,11 +76,11 @@
 
                     <div class="form-group">
                       <label for="inputTelefonoDocente">Télefono/celular</label>
-                      <input class="form-control" name="telDocente" id="inputTelefonoDocente" placeholder="Número de télefono o celular" type="number" [(ngModel)]="docente.telefono" value="0">  
+                      <input class="form-control" name="inputTelefonoDocente" id="inputTelefonoDocente" placeholder="Número de télefono o celular" type="number" [(ngModel)]="docente.telefono" value="0">  
                     </div>
                     <div class="form-group">
                       <label for="inputCorreoDocente">Correo electrónico</label>
-                      <input class="form-control" (keyup.enter)="guardarDocente()" name="correoDocente" id="inputCorreoDocente" placeholder="Correo electrónico" type="name" [disabled]="inputNombreMode" [(ngModel)]="docente.correo_electronico">  
+                      <input class="form-control" (keyup.enter)="guardarDocente()" name="inputCorreoDocente" id="inputCorreoDocente" placeholder="Correo electrónico" type="name" [disabled]="inputNombreMode" [(ngModel)]="docente.correo_electronico">  
                     </div>
                    </div>
             </div>
@@ -90,7 +89,7 @@
           <div class="container pl-5 py-4 container-btn justify-content-md-center">
             <div class="row">
               <div class="col-lg-3 col-md-3 mt-1 col-sm-6 col-xs-12" >
-                <button class="btn btn-primary btn-lg" (click)="guardarDocente()" >Guardar <img src="../../../assets/Iconos/floppy-disk.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini" ></button>
+                <button class="btn btn-primary btn-lg" name="btnguardar" (click)="guardarDocente()" >Guardar <img src="../../../assets/Iconos/floppy-disk.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini" ></button>
               </div >
               <div class="col-lg-3 col-md-3 col-sm-6 mt-1 col-xs-12">
                 <button class="btn btn-primary btn-lg" (click)="limpiar()">Limpiar <img src="../../../assets/Iconos/sweeping.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini" ></button>

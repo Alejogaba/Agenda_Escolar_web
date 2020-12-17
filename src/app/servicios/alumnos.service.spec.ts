@@ -24,7 +24,7 @@ describe('AlumnosService', () => {
    }).catch(err=>{
      respuesta=err as string;
    })
-   expect(respuesta).toEqual("ok");
+   expect(respuesta).toEqual("oks");
  });
 
  it('Debe eliminar a un alumno', async () => {

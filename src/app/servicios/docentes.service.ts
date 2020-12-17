@@ -58,7 +58,7 @@ export class DocentesService {
                   apellidos: docente.apellidos,
                   fecha_nacimiento: docente.fecha_nacimiento,
                   telefono: docente.telefono,
-                  correo_electronico: docente.correo_electronico
+                  correo_electronico: docente.correo_electronico.toLowerCase()
                  }).then(res=>{
                   resolve("ok")
                 }).catch(err=>{

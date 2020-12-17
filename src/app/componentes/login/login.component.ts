@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirePerformance } from '@angular/fire/performance';
 import { Router } from '@angular/router';
+import { GoogleAnalyticsService } from 'mugan86-ng-google-analytics';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/servicios/auth.service';
 import { GlobalService } from 'src/app/servicios/global.service';
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit {
   usuario:Usuario=new Usuario("","","","");
   
   constructor(private authService:AuthService, private performanceService:AngularFirePerformance, public router:Router,
-    private usuarioService:UsuariosService,private globalService:GlobalService) { 
+    private usuarioService:UsuariosService,private globalService:GlobalService,public googleAnalyticsService: GoogleAnalyticsService) { 
      
     }
 
@@ -58,29 +59,33 @@ export class LoginComponent implements OnInit {
   async onSubmitLogin(){
     console.info("Email: "+this.email);
     console.info("Rol: "+this.role);
+    this.googleAnalyticsService.eventEmitter('Interactuar con un elemento', 'Click en iniciar sesión', 'Click en iniciar sesión', 1);
     if(false/*this.verificarRol(this.email,this.role)*/){
      // this.presentToastCustom(this.verificarRol(this.email,this.role),"danger");
     }else{
       this.authService.login(this.email,this.password,this.role).then( async res=>{
         this.performanceService.trace("Inicio de sesion");
         console.log("login");
-        this.globalService.showSuccess("Inicio de sesión correcto");
+        
           switch (this.role) {
             case "admin":
               this.router.navigate(['menu-admin']);
+              this.globalService.showSuccess("Inicio de sesión correcto");
               break;
             case "docente":
              await this.getUsuario(this.email);
               setTimeout(() => {
                 this.router.navigate(['menu-docente']);
+                this.globalService.showSuccess("Inicio de sesión correcto");
                 window.localStorage.setItem("idUser", this.usuario.id);
                  }, 500);
               
               break;
             case "alumno":
-              this.getUsuario(this.email);
+              await this.getUsuario(this.email);
               setTimeout(() => {
                 this.router.navigate(['lista-notas-alumno']);
+                this.globalService.showSuccess("Inicio de sesión correcto");
                 window.localStorage.setItem("idUser", this.usuario.id)
                  }, 500);
               

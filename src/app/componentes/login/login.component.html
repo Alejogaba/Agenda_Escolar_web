@@ -26,7 +26,7 @@
 				<div class="login-group">
           <div class="form-group">
             <label for="lg_usertype" class="sr-only">Tipo de usuario  </label>      
-            <select class="form-control" id="lg_usertype" name="usertype" [(ngModel)]="role" placeholder="Tipo de usuario">
+            <select class="form-control" id="lg_usertype" name='selectTipoUsuario' [(ngModel)]="role" placeholder="Tipo de usuario">
               <option value="">Tipo de usuario</option>
               <option value="admin">Coordinador</option>
               <option value="docente">Docente</option>
@@ -50,11 +50,11 @@
             </div>-->
 					
 				</div>
-				<button type="submit" (click)="onSubmitLogin()" class="login-button"><i class="fa fa-chevron-right"></i><img class="arrow" src="../../../assets/Iconos/arrow-right.svg" alt="->"></button>
+				<button type="submit" name='btnLogin' (click)="onSubmitLogin()" class="login-button"><i class="fa fa-chevron-right"></i><img class="arrow" src="../../../assets/Iconos/arrow-right.svg" alt="->"></button>
 			</div>
-			<div class="etc-login-form">
+		<!--	<div class="etc-login-form">
 				<p>¿No tienes cuenta? puedes crear una <a (click)="iraRegistro()" >haciendo click aquí</a></p>
-			</div>
+			</div>-->
 		</form>
 	</div>
 	<!-- end:Main Form -->

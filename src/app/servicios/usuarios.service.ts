@@ -31,7 +31,7 @@ export class UsuariosService {
         }else{
           this.db.collection(this.collectionName).doc(correo_electronico).set({
             id:id,
-            correo_electronico: correo_electronico,
+            correo_electronico: correo_electronico.toLowerCase(),
             contrasena: contrasena,
             rol: rol
            }).then(res=>{

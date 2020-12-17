@@ -129,6 +129,7 @@ export class GestionDocentesComponent implements OnInit {
       trace.start();
       await this.docenteService.sendtoFirebase(this.docente).then(res=>{
         console.log("Se guardo el docente con exitó");
+        this.globalService.showSuccess("Se modifico el docente con exitó");
       }).catch(err=>{
         console.log(err);
         this.globalService.showError(err);
