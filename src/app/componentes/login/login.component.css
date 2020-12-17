@@ -24,6 +24,16 @@ body {
   padding: 20px;
   font-family: 'Varela Round';
 }
+.arrow{
+  transform: translateY(-6px);
+}   
+
+.lgnText{
+  padding: 15px 0;
+  font-size: 6.4vh;
+  color: #0275d8;
+  font-weight: bold;
+}
 
 /*=== 2. Anchor Link ===*/
 a {

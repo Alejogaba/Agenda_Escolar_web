@@ -4,9 +4,9 @@
 </nav>
 <br>
 
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-6">
         <div class="md-form" >
           <h5 position="stacked">Detalles del docente</h5>
           <textarea class="md-textarea" 
@@ -18,16 +18,32 @@
           <br>
           <form>
             <label for="inputBuscarDocente">Buscar docente</label>
-            <input class="form-control" [(ngModel)]="idDocenteSeleccionado" id="inputBuscarDocente" name="inputbuscardocente" type="number" min="0" max="0" placeholder="Ingrese la identificación del docente">
-            <button class="btn btn-primary mt-2" (click)="buscarDocente()">Buscar (icono)</button>
+            <input class="form-control" (keyup.enter)="buscarDocente()" [(ngModel)]="idDocenteSeleccionado" id="inputBuscarDocente" name="inputbuscardocente" type="number" min="0" max="0" placeholder="Ingrese la identificación del docente">
+            <button class="btn-asignar btn-lg btn-primary mt-2" (click)="buscarDocente()">Buscar  <img src="../../../assets/Iconos/search.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini-2" ></button>
           </form>
+
+          <br>
+
+          <label>Asignar asignatura</label>
+
+          <div class="container-fluid">
+            <div class="row">
+              <select [disabled]="!inputNombreMode"  class="form-control col-sm-8" placeholder="Seleccione una asignatura..." [(ngModel)]="idAsignaturaSeleccionada" (change)="seleccionAsignatura()">
+                <option value="" >Seleccione una asignatura...</option>
+                <option id="seleccionAsignatura" *ngFor="let asignatura of listaAsignaturas" 
+                 value="{{asignatura.nombre}}" >
+                 {{asignatura.nombre}}</option>
+              </select>
+              <div class="col-sm-4" >
+                <button [disabled]="!inputNombreMode" class=" btn-primary btn-lg btn-asignar" (click)="asignarAsignatura()" >Asignar</button>
+              </div >
+            </div>
+          </div>
           
         </div>
       </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="px-3" class="col-sm-12">
+    
+      <div class="px-3" class="col-sm-6">
         <h5 position="stacked">Registrar docente</h5>
         <form>
           <div class="container">
@@ -51,7 +67,7 @@
                     <div class="form-group">
                       <label for="inputfecha">Fecha de nacimiento</label>
                       <div class="input-group">
-                        <input class="form-control" placeholder="aaaa-mm-dd"
+                        <input class="form-control" [disabled]="inputNombreMode" placeholder="aaaa-mm-dd"
                                name="dp" [(ngModel)]="docente.fecha_nacimiento" ngbDatepicker #d="ngbDatepicker">
                         <div class="input-group-append">
                           <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
@@ -74,16 +90,16 @@
           <div class="container pl-5 py-4 container-btn justify-content-md-center">
             <div class="row">
               <div class="col-lg-3 col-md-3 mt-1 col-sm-6 col-xs-12" >
-                <button class="btn btn-primary btn-lg" (click)="guardarDocente()" >Guardar (icono)</button>
+                <button class="btn btn-primary btn-lg" (click)="guardarDocente()" >Guardar <img src="../../../assets/Iconos/floppy-disk.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini" ></button>
               </div >
               <div class="col-lg-3 col-md-3 col-sm-6 mt-1 col-xs-12">
-                <button class="btn btn-primary btn-lg" (click)="limpiar()">Limpiar (icono)</button>
+                <button class="btn btn-primary btn-lg" (click)="limpiar()">Limpiar <img src="../../../assets/Iconos/sweeping.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini" ></button>
               </div>
               <div class="col-lg-3 col-md-3 col-sm-12 mt-1 col-xs-12">
-                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal" [disabled]="!inputNombreMode">Eliminar (icono)</button>
+                <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal" [disabled]="!inputNombreMode">Eliminar <img src="../../../assets/Iconos/delete.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini" ></button>
               </div>
               <div class="col-lg-3 col-md-3 col-sm-6 mt-1 col-xs-12">
-                <button class="btn btn-primary btn-lg" (click)="volver()">Volver</button>
+                <button class="btn btn-primary btn-lg" (click)="volver()">Volver  <img src="../../../assets/Iconos/return.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail-mini" ></button>
               </div>
             </div>
           </div>

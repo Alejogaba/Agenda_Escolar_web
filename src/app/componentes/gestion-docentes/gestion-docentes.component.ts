@@ -7,6 +7,7 @@ import { DocentesService } from 'src/app/servicios/docentes.service';
 import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import {Location} from '@angular/common';
 import { GlobalService } from 'src/app/servicios/global.service';
+import { AngularFirePerformance } from '@angular/fire/performance';
 
 
 @Component({
@@ -17,14 +18,16 @@ import { GlobalService } from 'src/app/servicios/global.service';
 export class GestionDocentesComponent implements OnInit {
   currentNumber:Number|null=null;
   idDocenteSeleccionado:string="";
+  idAsignaturaSeleccionada:string="";
   listaAsignaturas:any = [];
   listaDocentes:any = [];
+  listaAsignaturas_de_Docente:any =[];
   inputNombreMode:boolean=false;
   docente:Docente=new Docente("","","","",null,null,"");
   asignatura:Asignatura=new Asignatura("","");
   textoTextarea:string|null="Lista de docentes:";
 
-  constructor(private docenteService:DocentesService, private authService:AuthService,
+  constructor(private docenteService:DocentesService, private tracerService:AngularFirePerformance, private authService:AuthService,
      private asignaturasService:AsignaturasService,private usuarioService:UsuariosService,
      private location:Location,private globalService:GlobalService) { }
 
@@ -38,43 +41,104 @@ export class GestionDocentesComponent implements OnInit {
   }
 
   cargarAsignaturas() {
-    this.asignaturasService.getAsignaturas().subscribe(cursos=>{
-      this.listaAsignaturas = cursos;
+    this.asignaturasService.getAsignaturas().subscribe(asignaturas=>{
+      this.listaAsignaturas = asignaturas;
     })
   }
 
-  cargarDocentes() {
-    this.docenteService.getDocentes().subscribe(docentes=>{
+
+  async cargarDocentes() {
+    const trace = await this.tracerService.trace("Cargar docentes");
+    trace.start();
+    await this.docenteService.getDocentes().subscribe(docentes=>{
       this.listaDocentes = docentes;
       docentes.forEach(element => {
         if(element.nombres!=null&&element.id!=null)
         this.textoTextarea=this.textoTextarea+"\n"+element.id+" | "+element.nombres+" "+element.apellidos;
       });
     })
+    trace.stop();
+  }
+
+  cargarAsignaturasdeDocente() {
+    this.asignaturasService.getAsignaturas_x_Docente(this.idDocenteSeleccionado).subscribe(asignaturas=>{
+      this.listaAsignaturas_de_Docente=asignaturas;
+      asignaturas.forEach(element => {
+        this.textoTextarea=this.textoTextarea+"\n"+element.nombre;
+      });
+    })
+  }
+
+  async asignarAsignatura(){
+    const trace = await this.tracerService.trace("Asignar asignatura");
+    trace.start();
+    await this.asignaturasService.sendtoFirebaseAsignaturaxDocente(this.idAsignaturaSeleccionada,this.docente.id).then(res=>{
+      console.log("Se asigno la asignatura con exitó");
+      this.globalService.showSuccess("Se asigno correctamente "+this.asignatura.nombre+" al docente");
+      this.limpiar();
+    }).catch(err=>{
+      this.globalService.showError(err);
+      console.log(err);
+    });
+    trace.stop();
+  }
+
+  seleccionAsignatura(){
+    if(this.idAsignaturaSeleccionada==""){
+      this.inputNombreMode=false;
+      this.limpiar();
+    }else{
+      this.listaAsignaturas.forEach((element: Asignatura) => {
+        if(element.id==this.idAsignaturaSeleccionada){
+          this.asignatura=element;
+        }
+      });
+      this.inputNombreMode=true;
+    }
+    
   }
   
-  guardarDocente(){
-    this.docenteService.sendtoFirebase(this.docente).then(res=>{
-      console.log("Se guardo el docente con exitó");
-      this.authService.createAccount(this.docente.correo_electronico,this.docente.id?.toString(),"docente").then(res=>{
-        console.log("Cuenta creada con exitó");
-        this.usuarioService.sendtoFirebases(this.docente.id,this.docente.correo_electronico,this.docente.id,"docente").then(res=>{
-          console.log("Se creo el usuario con exitó");
-          this.globalService.showSuccess("Docente creado con exitó");
-          this.limpiar();
+  async guardarDocente(){
+    if(!this.inputNombreMode){
+      const trace = await this.tracerService.trace("Guardar docente");
+      trace.start();
+      await this.docenteService.sendtoFirebase(this.docente).then(res=>{
+        console.log("Se guardo el docente con exitó");
+        this.authService.createAccount(this.docente.correo_electronico,this.docente.id?.toString(),"docente").then(res=>{
+          console.log("Cuenta creada con exitó");
+          this.usuarioService.sendtoFirebases(this.docente.id,this.docente.correo_electronico,this.docente.id,"docente").then(res=>{
+            console.log("Se creo el usuario con exitó");
+            this.globalService.showSuccess("Docente creado con exitó");
+            this.limpiar();
+          }).catch(err=>{
+            console.error(err)
+            this.globalService.showError(err);
+          });
         }).catch(err=>{
-          console.error(err)
-          this.globalService.showError(err);
+          console.error("Error al crear la cuenta: \n"+err);
+          this.globalService.showError("Error al crear la cuenta: \n"+err);
+          this.eliminarDocente();
         });
       }).catch(err=>{
-        console.error("Error al crear la cuenta: \n"+err);
-        this.globalService.showError("Error al crear la cuenta: \n"+err);
-        this.eliminarDocente();
-      });
-    }).catch(err=>{
-      console.log(err);
-      this.globalService.showError(err);
-    })
+        console.log(err);
+        this.globalService.showError(err);
+      })
+      trace.stop();
+    }else{
+      const trace = await this.tracerService.trace("Modificar docente");
+      trace.start();
+      await this.docenteService.sendtoFirebase(this.docente).then(res=>{
+        console.log("Se guardo el docente con exitó");
+      }).catch(err=>{
+        console.log(err);
+        this.globalService.showError(err);
+      })
+      trace.stop();
+    }
+    
+
+
+    
   }
 
   buscarDocente(){
@@ -83,6 +147,10 @@ export class GestionDocentesComponent implements OnInit {
         if(docente!=null){
         this.docente=docente as Docente;
         this.inputNombreMode=true;
+      this.textoTextarea="Asignaturas que dicta este docente:"
+       setTimeout(() => {
+      this.cargarAsignaturasdeDocente();
+       }, 500);
         }else{
           this.globalService.showInfo("No se encontro el docente");
         }
@@ -93,8 +161,10 @@ export class GestionDocentesComponent implements OnInit {
     }
   }
 
-  eliminarDocente(){
-    this.docenteService.removefromFirebase(this.docente.id).then(res=>{
+  async eliminarDocente(){
+    const trace = await this.tracerService.trace("Eliminar docente");
+    trace.start();
+    await this.docenteService.removefromFirebase(this.docente.id).then(res=>{
       console.log("Docente "+this.docente.nombres+" eliminado con exitó");
       this.globalService.showSuccess("Docente "+this.docente.nombres+" eliminado con exitó");
       this.limpiar();
@@ -102,12 +172,14 @@ export class GestionDocentesComponent implements OnInit {
       this.globalService.showInfo(er);
       console.error(er);
     })
+    trace.stop();
   }
 
   limpiar(){
     this.docente=new Docente("","","","",null,null,"");
     this.inputNombreMode=false;
     this.idDocenteSeleccionado="";
+    this.idAsignaturaSeleccionada="";
     this.recargarConsola();
   }
 

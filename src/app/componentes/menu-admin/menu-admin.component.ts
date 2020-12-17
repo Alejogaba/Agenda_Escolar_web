@@ -21,6 +21,10 @@ export class MenuAdminComponent implements OnInit {
     this.router.navigate(['gestion-cursos'])
   };
 
+  iraLogin(){
+    this.router.navigate(['login']);
+  }
+
   iraGestionAsignatura(){
     this.router.navigate(['gestion-asignaturas'])
   };

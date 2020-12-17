@@ -41,16 +41,13 @@ export class ConsultaNotaAlumnoComponent implements OnInit {
 
   async cargarNotas() {
 
-    return new Promise((resolve,rejects)=>{
-      this.listarNotas().then(async res=>{
+    return new Promise(async (resolve,rejects)=>{
+      await this.listarNotas().then(async res=>{
       
         this.listaNotas.forEach( (async (element: Calificacion,index: number) => {
           
           
-            await this.buscarAsignatura(element.idAsignatura).then(res=>{
-              element.idAsignatura=res as string;
-            }).catch(err=>{element.idAsignatura=element.idAsignatura;});
-    
+            
             await this.buscarCurso(element.idCurso).then(res=>{
               element.idCurso=res as string;
             }).catch(err=>{element.idCurso=element.idCurso;});
@@ -76,6 +73,7 @@ export class ConsultaNotaAlumnoComponent implements OnInit {
     await this.cargarNotas();
     await this.calcularTotalPeriodo(this.sumaPeriodos);
     console.log("datos cargados")
+    console.log(this.listaNotas)
   }
 
   obtenerPeriodos(periodo:number,nota:number,porcentaje:number){
@@ -105,9 +103,9 @@ export class ConsultaNotaAlumnoComponent implements OnInit {
   }
 
   async listarNotas() {
-    this.limpiar();
+    
     return new Promise((resolve,rejects)=>{
-      this.calificacionesService.getCalificaciones_x_Asignatura(this.idAsignaturaSeleccionada).subscribe(notas=>{
+      this.calificacionesService.getCalificaciones().subscribe(notas=>{
         if(notas!=null){
           this.listaNotas = notas;
           resolve("ok")

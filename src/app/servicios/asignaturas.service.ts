@@ -56,6 +56,42 @@ export class AsignaturasService {
     })
   }
 
+  getAsignaturas_x_Docente(idDocente:string|null){
+    return this.db.collection("AsignaturaDocente",ref=>{return ref.where("id","==",idDocente)}).snapshotChanges().pipe(map(asignaturas=>{
+      return asignaturas.map(a=>{
+        const data = a.payload.doc.data() as Asignatura;
+        data.id = a.payload.doc.id;
+        return data;
+      })
+    }))}
+
+
+
+  
+  sendtoFirebaseAsignaturaxDocente(id_asignatura:string|null,id_docente:string){
+    return new Promise((resolve,rejects)=>{
+      if(id_asignatura==null||id_asignatura==""||id_docente==""){
+        rejects("No deje campos vacios")
+      }else{
+        if(id_asignatura.length<5){
+          rejects("Cantidad insuficiente de caracteres")
+        }else{
+            this.db.collection("AsignaturaDocente").doc(this.db.createId()).set({
+              id : id_docente,
+              nombre : id_asignatura
+            }).then(res=>{
+              resolve("ok")
+            }).catch(err=>{
+              rejects("No se pudo asignar la asignatura\nError:"+err);
+            })
+            
+        }  
+      }
+    })
+  }
+
+
+
   sendtoFirebases(asignatura:Asignatura){
     return new Promise((resolve,rejects)=>{
       if(asignatura.nombre==null||asignatura.nombre==""){

@@ -1,8 +1,27 @@
-<div>
+<div class="container pt-5">
     <br>
-    <button class="btn btn-primary" expand="block" (click)="iraRegistrarNotas()">Registrar notas</button>
-    <br>
-    <button class="btn btn-primary" expand="block" (click)="iraConsultarNotas()">Consultar notas</button>
-      
+    <div class="row pt-5">
+      <div  (click)="iraRegistrarNotas()" class="module col-1 col-sm-6 col-md-4 col-lg-4 col-xl-4 pt-5">
+      <img src="../../../assets/Iconos/subject.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail" onerror="this.src='../../assets/images/NoDisponible.jpg'" >
+            <h3><b>Registrar notas</b></h3>
+      </div>
+
+      <div (click)="iraConsultarNotas()" class="module col-1 col-sm-6 col-md-4 col-lg-4 col-xl-4 pt-5">
+        <img src="../../../assets/Iconos/exam1.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail" onerror="this.src='../../assets/images/NoDisponible.jpg'" >
+              <h3><b>Consultar notas</b></h3>
+        </div>
+
+        <div (click)="iraLogin()" class="module col-sm-4 pt-5">
+            <img src="../../../assets/Iconos/logout-thin.svg" alt="https://noticiasbancarias.com/wp-content/plugins/accelerated-mobile-pages/images/SD-default-image.png" class="thumbnail" onerror="this.src='../../assets/images/NoDisponible.jpg'" >
+                   <h3><b>Salir</b></h3>
+           </div>
+       
+               
+      </div>
+
 </div>
+
+
+  
+
   

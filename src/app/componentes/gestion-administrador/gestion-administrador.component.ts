@@ -20,7 +20,7 @@ export class GestionAdministradorComponent implements OnInit {
   password:string="";
   inputNombreMode:boolean=false;
   administrador:Administrador=new Administrador("","","",null,"");
-  textoTextarea:string|null="Lista de administradores:";
+  textoTextarea:string|null="Lista de coordinadores:";
   
 
   constructor(private administradorService:AdministradoresService, private authService:AuthService,
@@ -47,32 +47,42 @@ export class GestionAdministradorComponent implements OnInit {
   }
   
   guardarAdministrador(){
-    this.administradorService.sendtoFirebase(this.administrador).then(res=>{
-      console.log("Se guardo el alumno con exitó");
-      this.authService.createAccount(this.administrador.correo_electronico,this.password?.toString(),"admin").then(res=>{
-        console.log("Cuenta creada con exitó");
-        this.usuarioService.sendtoFirebases(this.administrador.id,this.administrador.correo_electronico,this.administrador.id,"admin").then(res=>{
-          console.log("Se creo el usuario con exitó");
-          this.globalService.showSuccess("Se guardo el alumno con exitó");
-          setTimeout(() => {
-            this.globalService.showInfo("Credenciales para iniciar sesión:\n"+
-            "Correo electrónico:"+this.administrador.correo_electronico+
-            "\nContraseña:"+this.password)
-        }, 3000);
-          this.limpiar();
+    if(!this.inputNombreMode){
+      this.administradorService.sendtoFirebase(this.administrador).then(res=>{
+        console.log("Se guardo el coordinador con exitó");
+        this.authService.createAccount(this.administrador.correo_electronico,this.password?.toString(),"admin").then(res=>{
+          console.log("Cuenta creada con exitó");
+          this.usuarioService.sendtoFirebases(this.administrador.id,this.administrador.correo_electronico,this.administrador.id,"admin").then(res=>{
+            console.log("Se creo el usuario con exitó");
+            this.globalService.showSuccess("Se guardo el coordinador con exitó");
+            setTimeout(() => {
+              this.globalService.showInfo("Credenciales para iniciar sesión:\n"+
+              "Correo electrónico:"+this.administrador.correo_electronico+
+              "\nContraseña:"+this.password)
+          }, 3000);
+            this.limpiar();
+          }).catch(err=>{
+            console.error(err)
+            this.globalService.showError("Error al crear la cuenta:\n"+err);
+          });
         }).catch(err=>{
-          console.error(err)
+          console.error("Error al crear la cuenta: \n"+err);
           this.globalService.showError("Error al crear la cuenta:\n"+err);
+          this.eliminarAdministrador();
         });
       }).catch(err=>{
-        console.error("Error al crear la cuenta: \n"+err);
-        this.globalService.showError("Error al crear la cuenta:\n"+err);
-        this.eliminarAdministrador();
-      });
-    }).catch(err=>{
-      this.globalService.showError(err);
-      console.log(err);
-    })
+        this.globalService.showError(err);
+        console.log(err);
+      })
+    }else{
+      this.administradorService.sendtoFirebase(this.administrador).then(res=>{
+        console.log("Se guardo el coordinador con exitó");
+      }).catch(err=>{
+        this.globalService.showError(err);
+        console.log(err);
+      })
+    }
+    
   }
 
   buscarAdministrador(){
@@ -82,7 +92,7 @@ export class GestionAdministradorComponent implements OnInit {
         this.administrador=administrador as Administrador;
         this.inputNombreMode=true;
         }else{
-        this.globalService.showInfo("No se encontro el administrador");
+        this.globalService.showInfo("No se encontro el coordinador");
         
         }
       });
@@ -96,7 +106,7 @@ export class GestionAdministradorComponent implements OnInit {
     this.administradorService.removefromFirebase(this.administrador.id).then(res=>{
       console.log("Administrador "+this.administrador.nombres+" eliminado con exitó");
       this.limpiar();
-      this.globalService.showError("Administrador "+this.administrador.nombres+" eliminado con exitó");
+      this.globalService.showError("Coordinador "+this.administrador.nombres+" eliminado con exitó");
     }).catch(er=>{
       this.globalService.showError(er);
       console.error(er);
@@ -111,7 +121,7 @@ export class GestionAdministradorComponent implements OnInit {
   }
 
   recargarConsola(){
-    this.textoTextarea="Lista de administradores:"
+    this.textoTextarea="Lista de coordinadores:"
     setTimeout(() => {
       this.cargarAdministradores();
   }, 500);

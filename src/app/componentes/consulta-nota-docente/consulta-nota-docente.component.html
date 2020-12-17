@@ -1,7 +1,13 @@
-
+<br>
 <div class="container">
   <div class="row">
     <h6>Lista de notas</h6>
+    <textarea *ngIf="!isHidden" class="md-textarea" 
+          disabled
+          readonly
+          rows="15"
+          >
+        </textarea> 
     <div *ngFor="let periodo of listaPeriodos" class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
      <label>Periodo: {{periodo.periodo}}</label>
       <table  class="table">
@@ -27,17 +33,20 @@
 |      <label>Promedio: {{periodo.total}}</label>
   </div>
   </div>
+  <br>
   <div class="row">
-    <div class="col-sm-3">  <select class="form-control"  placeholder="Seleccione una asignatura..." [(ngModel)]="idAsignaturaSeleccionada">
-      <option value="">Seleccione una asignatura...</option>
-      <option *ngFor="let asignatura of listaAsignaturas" value="{{asignatura.id}}">{{asignatura.nombre}}</option>
+    <div class="col-sm-3"> <select class="form-control" placeholder="Seleccione una asignatura..." [(ngModel)]="idAsignaturaSeleccionada">
+      <option value="" >Seleccione una asignatura...</option>
+      <option id="seleccionAsignatura" *ngFor="let asignatura of listaAsignaturas" 
+       value="{{asignatura.id}}" >
+       {{asignatura.nombre}}</option>
     </select></div>
     <div class="col-sm-3"><select class="form-control" placeholder="Seleccione un curso..." [(ngModel)]="idCursoSeleccionado">
       <option value="">Seleccione un curso...</option>
       <option *ngFor="let curso of listaCursos"  value="{{curso.id}}">{{curso.nombre}}</option>
     </select></div>
     
-    <div class="col-sm-3"><button (click)="cargarDatos()">Consultar</button></div>
+    <div class="col-sm-3"><button class="btn btn-primary" (click)="cargarDatos()">Consultar</button></div>
   </div>
 
 </div>

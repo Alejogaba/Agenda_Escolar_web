@@ -17,7 +17,7 @@ export class CalificacionesService {
   async sendtoFirebase(calificacion:Calificacion){
     const idGenerated=this.db.createId();
     return new Promise((resolve,rejects)=>{
-      if(this.esVacio(calificacion)){
+      if(this.esVacio(calificacion)||calificacion.calificacion==null||calificacion.porcentaje==null){
         rejects("No deje campos vacios")
       }else{
         if(calificacion.calificacion<0||calificacion.calificacion>100||calificacion.porcentaje<1||calificacion.porcentaje>100){
@@ -47,7 +47,7 @@ export class CalificacionesService {
   esVacio(calificacion:Calificacion){
     if(calificacion.idAlumno==null||calificacion.idAlumno==""||calificacion.idAsignatura==null
     ||calificacion.idAsignatura==""||calificacion.idDocente==null||calificacion.idDocente==""||
-    calificacion.calificacion<0||calificacion.fecha_registro==null||calificacion.idCurso==""){
+    calificacion.calificacion==0||calificacion.fecha_registro==null||calificacion.idCurso==""){
       return true;
     }else{
       return false;
@@ -72,6 +72,31 @@ export class CalificacionesService {
           return data;
         })
       }));}
+
+      
+    getCalificaciones_x_Asignatura_x_Docente_x_Curso(idAsignatura:string|null,idDocente:string|null,idCurso:string|null){
+      return this.db.collection(this.collection,ref=>{return ref.where("idAsignatura","==",idAsignatura).where("idDocente","==",idDocente).where("idCurso","==",idCurso)}).snapshotChanges().pipe(map(notas=>{
+        return notas.map(a=>{
+          const data = a.payload.doc.data() as Calificacion;
+          data.id = a.payload.doc.id;
+          return data;
+        })
+      }));
+    
+    }
+
+
+       
+    getCalificaciones_x_Asignatura_x_Alumno(idAsignatura:string|null,idAlumno:string|null){
+      return this.db.collection(this.collection,ref=>{return ref.where("idAsignatura","==",idAsignatura).where("idA","==",idAlumno)}).snapshotChanges().pipe(map(notas=>{
+        return notas.map(a=>{
+          const data = a.payload.doc.data() as Calificacion;
+          data.id = a.payload.doc.id;
+          return data;
+        })
+      }));
+    
+    }
 
 
 

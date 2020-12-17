@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   email: string="";
   password:string="";
   role:string="";
+  userId:string="";
   show = false;
   colorToast="#f7f7f7";
   mensajeToast:string="";
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit {
     if(false/*this.verificarRol(this.email,this.role)*/){
      // this.presentToastCustom(this.verificarRol(this.email,this.role),"danger");
     }else{
-      this.authService.login(this.email,this.password,this.role).then( res=>{
+      this.authService.login(this.email,this.password,this.role).then( async res=>{
         this.performanceService.trace("Inicio de sesion");
         console.log("login");
         this.globalService.showSuccess("Inicio de sesión correcto");
@@ -69,12 +70,20 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['menu-admin']);
               break;
             case "docente":
-              window.localStorage.setItem("emailDocente", this.email);
-              this.router.navigate(['menu-docente']);
+             await this.getUsuario(this.email);
+              setTimeout(() => {
+                this.router.navigate(['menu-docente']);
+                window.localStorage.setItem("idUser", this.usuario.id);
+                 }, 500);
+              
               break;
             case "alumno":
-              window.localStorage.setItem("emailDocente", this.email);
-              this.router.navigate(['lista-notas-alumno']);
+              this.getUsuario(this.email);
+              setTimeout(() => {
+                this.router.navigate(['lista-notas-alumno']);
+                window.localStorage.setItem("idUser", this.usuario.id)
+                 }, 500);
+              
               break;
             default:
               break;
@@ -125,9 +134,9 @@ export class LoginComponent implements OnInit {
   async getUsuario(email:string){
 
     return new Promise((resolve,rejects)=>{
-      this.usuarioService.getUsuario(email).subscribe(usuario=>{
+      this.usuarioService.buscarUsuario(email.toLowerCase()).subscribe(async usuario=>{
         if(usuario!=null){
-          this.usuario = usuario as Usuario;
+          this.usuario = await usuario as Usuario;
           resolve("ok")
       }else{
         console.info("No se encontro el usuario");

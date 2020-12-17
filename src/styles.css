@@ -3,6 +3,7 @@ h1{
 color: azure;
 padding-bottom: 2%;
 padding-left: 3%;
+font-size: 6vh;
 }
 
 
@@ -23,17 +24,20 @@ textarea {
 
 h5{
     color: azure;
+    font-size: 4vh;
     padding-bottom: 2%;
     }
 
 label{
 color: azure;
+font-size: 2.2vh;
 }
 body{
 background-color: #252529;
 }
 .form-control{
 background-color: #404047;
+font-size: 2.2vh;
 color:azure;
 }
 
@@ -97,15 +101,37 @@ color: azure;
 
 .module {
     position: relative;
-    padding: 3vh;
     text-align: center;
     cursor: pointer;
     color: #eee;
-    max-height: 300px;
-    min-width: 300px;
+    padding-bottom: 100px;
+    max-height: 600px;
+    min-width: 350px;
     background-color:transparent;
     border-radius: 2px;
   }
+
+.btn{
+    position: relative;
+    text-align: center;
+    max-height: auto;
+    font-size: 3.8vh;
+    max-width: 350px;
+}
+
+.thumbnail-mini {
+    position: relative;
+    display: inline-block;
+    transform: translate( 0%, -0% );
+    padding: 5%;
+    max-width: 55px;
+    max-height: 55px;
+    height:auto;
+    z-index: 1;
+}
+
+
+
   .module:hover {
     background-color:  #2c2c3171;
     cursor: pointer;

@@ -24,12 +24,14 @@ export class ConsultaNotaDocenteComponent implements OnInit {
   listaAsignaturas:any = [];
   listaPeriodos:any[] = [];
   sumaPeriodos:number[] = [];
+  isHidden=false;
   nombreAsignatura:string|null="No definido";
   fecha:string = formatDate(new Date(), 'dd/MM/yyyy', 'en');
   nombreAlumno: string | null="No definido";
   nombreCurso: string | null="No definido";
   idAsignaturaSeleccionada: string="";
   idCursoSeleccionado: string="";
+  idDocenteSeleccionado:string|null=localStorage.getItem("idUser");
 
   constructor(private calificacionesService:CalificacionesService,
     private asignaturaService:AsignaturasService, private alumnoService:AlumnosService
@@ -38,6 +40,8 @@ export class ConsultaNotaDocenteComponent implements OnInit {
   ngOnInit(): void {
     this.cargarAsignaturas();
     this.cargarCursos();
+    this.cargarAsignaturasdeDocente();
+    console.log(this.idDocenteSeleccionado);
   }
 
   async cargarNotas() {
@@ -55,11 +59,11 @@ export class ConsultaNotaDocenteComponent implements OnInit {
             await this.buscarCurso(element.idCurso).then(res=>{
               element.idCurso=res as string;
             }).catch(err=>{element.idCurso=element.idCurso;});
-  
+            if(element.periodo!=null&&element.calificacion!=null&&element.calificacion!=null&&element.porcentaje!=null){
             this.obtenerPeriodos(element.periodo,element.calificacion,element.porcentaje);
 
             this.sumaPeriodos[element.periodo-1]=(element.calificacion*(element.porcentaje/100))+this.sumaPeriodos[element.periodo-1];
-    
+            }
             element.fecha_registro=formatDate(element.fecha_registro, 'dd/MM/yyyy', 'en');
           
             console.log(this.listaPeriodos);
@@ -101,7 +105,7 @@ export class ConsultaNotaDocenteComponent implements OnInit {
   async listarNotas() {
     this.limpiar();
     return new Promise((resolve,rejects)=>{
-      this.calificacionesService.getCalificaciones().subscribe(notas=>{
+      this.calificacionesService.getCalificaciones_x_Asignatura_x_Docente_x_Curso(this.idAsignaturaSeleccionada,this.idDocenteSeleccionado,this.idCursoSeleccionado).subscribe(notas=>{
         if(notas!=null){
           this.listaNotas = notas;
           resolve("ok")
@@ -124,6 +128,14 @@ export class ConsultaNotaDocenteComponent implements OnInit {
       rejects("No definido")
     }
       })
+  }
+
+  
+
+  cargarAsignaturasdeDocente() {
+    this.asignaturaService.getAsignaturas_x_Docente(this.idDocenteSeleccionado).subscribe(asignaturas=>{
+      this.listaAsignaturas=asignaturas;
+    })
   }
 
   async buscarCurso(idCurso:string|null){

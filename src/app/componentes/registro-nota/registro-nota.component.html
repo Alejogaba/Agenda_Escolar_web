@@ -2,60 +2,68 @@
   <br>
   <h1><strong>Registro de notas</strong></h1>
 </nav>
-<div>
-  
-    <div>
-      <div>
-        <div>
-          <div>
+
+        <div class="container">
+          <div class="row">
+
+            <div class="col-sm-12">
+              <form>
                 <div class="form-group">
-                  <label position="stacked">Registrar nota</label>
-                  <br>
-                  <label>Asignatura</label>
-                  <select class="form-control"  placeholder="Seleccione una asignatura..." [(ngModel)]="calificacion.idAsignatura">
+                  <label for="asignatura">Asignatura</label>
+                  <select class="form-control" name="asignatura" placeholder="Seleccione una asignatura..." [(ngModel)]="calificacion.idAsignatura">
                     <option value="">Seleccione una asignatura...</option>
-                    <option *ngFor="let asignatura of listaAsignaturas" value="{{asignatura.id}}">{{asignatura.nombre}}</option>
+                    <option *ngFor="let asignatura of listaAsignaturas" value="{{asignatura.nombre}}">{{asignatura.nombre}}</option>
                   </select>
-                  <br>
-                  <label>Curso</label>
-                  <select class="form-control"  placeholder="Seleccione una curso..." [(ngModel)]="calificacion.idCurso">
-                    <option value="">Seleccione una curso...</option>
-                    <option *ngFor="let curso of listaCursos" value="{{curso.id}}">{{curso.nombre}}</option>
-                  </select>
-                  <br>
-                  <label>Alumno</label>
-                  <select class="form-control" placeholder="Alumno" [(ngModel)]="calificacion.idAlumno">
-                    <option value="">Seleccione un alumno...</option>
-                    <option *ngFor="let alumno of listaAlumnos" value="{{alumno.id}}">{{alumno.nombres}}</option>
-                  </select>
-                  <br>
-                  <label>Nota</label>
-                  <input class="form-control" placeholder="Ingrese un valor entre 0 y 100" type="number" [(ngModel)]="calificacion.calificacion" >
-                  <br>
-                  <label>Periodo</label>
-                  <input class="form-control" placeholder="Ingrese el número del periodo" type="number" [(ngModel)]="calificacion.periodo" >
-                  <br>
-                  <label>Porcentaje de la nota</label>
-                  <input class="form-control" placeholder="Ingrese un valor entre 1 y 100" type="number" [(ngModel)]="calificacion.porcentaje" >
-                  <br>
-                  <label>Comentario</label>
-                  <input class="form-control" placeholder="Comentarios o descripción de la nota" type="name"[(ngModel)]="calificacion.comentario" >
                 </div>
+                
+                  <div class="form-group">
+                    <label for="curso">Curso</label>
+                    <select name="curso" class="form-control"  placeholder="Seleccione una curso..." [(ngModel)]="calificacion.idCurso">
+                      <option value="">Seleccione una curso...</option>
+                      <option *ngFor="let curso of listaCursos" value="{{curso.id}}">{{curso.nombre}}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="alumno">Alumno</label>
+                    <select name="alumno" class="form-control" placeholder="Alumno" [(ngModel)]="calificacion.idAlumno">
+                      <option value="">Seleccione un alumno...</option>
+                      <option *ngFor="let alumno of listaAlumnos" value="{{alumno.id}}">{{alumno.nombres}}</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="nota">Nota</label>
+                    <input name="nota" class="form-control" placeholder="Ingrese un valor entre 0 y 100" type="number" [(ngModel)]="calificacion.calificacion" >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="periodo">Periodo</label>
+                    <input class="form-control" name="periodo" placeholder="Ingrese el número del periodo" type="number" [(ngModel)]="calificacion.periodo" >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="porcentaje">Porcentaje de la nota</label>
+                    <input class="form-control" name="porcentaje" placeholder="Ingrese un valor entre 1 y 100" type="number" [(ngModel)]="calificacion.porcentaje" >
+                  </div>
+
+                  <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <input class="form-control" name="descripcion" placeholder="Comentarios o descripción de la nota" type="name"[(ngModel)]="calificacion.comentario" >
+                  </div>
+
+                  
+                  <button class="col-sm-6 btn btn-primary mr-5" (click)="guardarCalificacion()">Guardar </button>
+                  <button class="col-sm-6 btn btn-primary ml-2" (click)="limpiar()">Limpiar</button>
+
+               </form>
+            </div>
+               
+              
+                
             
               
           </div>
         </div>
-      </div>
-      &nbsp;
-      <div>
-        <div>
-          <button (click)="guardarCalificacion()">Guardar</button>
-        </div>
-        <div>
-          <button (click)="limpiar()">Limpiar</button>
-        </div>
-      </div>
-    </div>
-    
-  </div>
+     
   

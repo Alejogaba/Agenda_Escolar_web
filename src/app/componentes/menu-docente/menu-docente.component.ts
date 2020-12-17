@@ -20,4 +20,8 @@ export class MenuDocenteComponent implements OnInit {
   iraConsultarNotas(){
     this.router.navigate(['lista-notas-docente'])
   };
+  
+  iraLogin(){
+    this.router.navigate(['login']);
+  }
 }

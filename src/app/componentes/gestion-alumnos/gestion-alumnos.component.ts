@@ -44,33 +44,43 @@ export class GestionAlumnosComponent implements OnInit {
   }
   
   guardarAlumno(){
-    this.alumnoService.sendtoFirebase(this.alumno).then(res=>{
-      console.log("Se guardo el alumno con exitó");
-      this.authService.createAccount(this.alumno.correo_electronico,this.alumno.id?.toString(),"alumno").then(res=>{
-        console.log("Cuenta creada con exitó");
-        this.usuarioService.sendtoFirebases(this.alumno.id,this.alumno.correo_electronico,this.alumno.id,"alumno").then(res=>{
-          console.log("Se creo el usuario con exitó");
-          this.limpiar();
-          this.globalService.showSuccess("Se guardo el alumno con exitó");
-          setTimeout(() => {
-            this.globalService.showInfo("Credenciales para iniciar sesión:\n"+
-            "Correo electrónico:"+this.alumno.correo_electronico+
-            "\nContraseña:"+this.alumno.id+
-            "\nPueden ser cambiadas luego de iniciar sesión")
-        }, 3000);
+    if(!this.inputNombreMode){
+      this.alumnoService.sendtoFirebase(this.alumno).then(res=>{
+        console.log("Se guardo el alumno con exitó");
+        this.authService.createAccount(this.alumno.correo_electronico,this.alumno.id?.toString(),"alumno").then(res=>{
+          console.log("Cuenta creada con exitó");
+          this.usuarioService.sendtoFirebases(this.alumno.id,this.alumno.correo_electronico,this.alumno.id,"alumno").then(res=>{
+            console.log("Se creo el usuario con exitó");
+            this.limpiar();
+            this.globalService.showSuccess("Se guardo el alumno con exitó");
+            setTimeout(() => {
+              this.globalService.showInfo("Credenciales para iniciar sesión:\n"+
+              "Correo electrónico:"+this.alumno.correo_electronico+
+              "\nContraseña:"+this.alumno.id+
+              "\nPueden ser cambiadas luego de iniciar sesión")
+          }, 3000);
+          }).catch(err=>{
+            console.error(err)
+            this.globalService.showError(err);
+          });
         }).catch(err=>{
-          console.error(err)
-          this.globalService.showError(err);
+          console.error("Error al crear la cuenta: \n"+err);
+          this.globalService.showError("Error al crear la cuenta: \n"+err);
+          this.eliminarAlumno();
         });
       }).catch(err=>{
-        console.error("Error al crear la cuenta: \n"+err);
-        this.globalService.showError("Error al crear la cuenta: \n"+err);
-        this.eliminarAlumno();
-      });
-    }).catch(err=>{
-      console.log(err);
-      this.globalService.showError(err);
-    })
+        console.log(err);
+        this.globalService.showError(err);
+      })
+    }else{
+      this.alumnoService.sendtoFirebase(this.alumno).then(res=>{
+        console.log("Se actualizo el alumno con exitó");
+      }).catch(err=>{
+        console.log(err);
+        this.globalService.showError(err);
+      })
+    }
+   
   }
 
   buscarAlumno(){

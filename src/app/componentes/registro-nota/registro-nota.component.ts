@@ -26,7 +26,7 @@ export class RegistroNotaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.calificacion = new Calificacion("","",localStorage.getItem("emailDocente"),"",0,0,0,"")
+    this.calificacion = new Calificacion("","",localStorage.getItem("idUser"),"",0,0,0,"")
     this.cargarAlumnos();
     this.cargarCursos();
     this.cargarAsignaturas();

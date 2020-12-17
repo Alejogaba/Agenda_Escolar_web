@@ -45,15 +45,18 @@ export class GestionAsignaturasComponent implements OnInit {
     },)
   }
   
-  guardarAsignatura(){
-    this.asignaturaService.sendtoFirebase(this.asignatura).then(res=>{
+  async guardarAsignatura(){
+    const trace = await this.perfService.trace("Guardar asignatura");
+    trace.start();
+    await this.asignaturaService.sendtoFirebase(this.asignatura).then(res=>{
       console.log("Se guardo la asignatura con exitó");
       this.globalService.showSuccess("Se guardo la asignatura con exitó");
       this.limpiar();
     }).catch(err=>{
       this.globalService.showError(err);
       console.log(err);
-    })
+    });
+    trace.stop();
   }
 
   seleccionAsignatura(){
@@ -71,9 +74,10 @@ export class GestionAsignaturasComponent implements OnInit {
     
   }
 
-  eliminarAsignatura(){
-    this.asignaturaService.removefromFirebase(this.asignatura).then(res=>{
-      
+  async eliminarAsignatura(){
+    const trace = await this.perfService.trace("Eliminar asignatura");
+    trace.start();
+    await this.asignaturaService.removefromFirebase(this.asignatura).then(res=>{
       console.log("Asignatura "+this.asignatura.nombre+" eliminado con exitó")
       this.globalService.showSuccess("Asignatura "+this.asignatura.nombre+" eliminado con exitó");
       this.limpiar();
@@ -81,6 +85,7 @@ export class GestionAsignaturasComponent implements OnInit {
       this.globalService.showError(er);
       console.log(er);
     })
+    trace.stop();
   }
 
   limpiar(){
