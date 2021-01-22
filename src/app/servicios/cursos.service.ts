@@ -69,19 +69,6 @@ export class CursosService {
   }
 
   
-  sendtoFirebases(curso:Curso){
-    return new Promise((resolve,rejects)=>{
-      if(curso.id_grado==null||curso.id_grado==""||curso.nombre==null||curso.nombre==""){
-        rejects("No deje campos vacios")
-      }else{
-        if(curso.nombre.length<5){
-          rejects("Cantidad insuficiente de caracteres")
-        }else{
-           resolve("ok")
-        }
-      }
-    })
-  }
 
   removefromFirebase(curso:Curso){
     return new Promise((resolve,rejects)=>{

@@ -10,6 +10,7 @@ import { AlumnosService } from 'src/app/servicios/alumnos.service';
 import { AsignaturasService } from 'src/app/servicios/asignaturas.service';
 import { CalificacionesService } from 'src/app/servicios/calificaciones.service';
 import { CursosService } from 'src/app/servicios/cursos.service';
+import { GlobalService } from 'src/app/servicios/global.service';
 
 @Component({
   selector: 'app-consulta-nota-docente',
@@ -35,7 +36,7 @@ export class ConsultaNotaDocenteComponent implements OnInit {
 
   constructor(private calificacionesService:CalificacionesService,
     private asignaturaService:AsignaturasService, private alumnoService:AlumnosService
-    ,private cursoService:CursosService) { }
+    ,private cursoService:CursosService,private globalService:GlobalService) { }
 
   ngOnInit(): void {
     this.cargarAsignaturas();
@@ -78,6 +79,7 @@ export class ConsultaNotaDocenteComponent implements OnInit {
 
 
   async cargarDatos(){
+    this.globalService.showError("Seleccione una asignatura")
     await this.cargarNotas();
     await this.calcularTotalPeriodo(this.sumaPeriodos);
     console.log("datos cargados")

@@ -129,7 +129,7 @@ export class AlumnosService {
     return true;
   }
   
-  validarEdad(edad:Date|null):boolean{
+  validarEdad(edad:string|null):boolean{
     return true;
   }
 

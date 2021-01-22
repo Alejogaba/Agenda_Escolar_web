@@ -20,7 +20,7 @@ describe('DocentesService', () => {
 
   it('Debe crear un docente', async () => {
     let respuesta:string="";
-   await service.sendtoFirebase(new Docente("123456781","ESPAÑOL","Camila","Contreras",new Date,31233118912,"prueba@gmail.com")).then(res=>{
+   await service.sendtoFirebase(new Docente("123456781","ESPAÑOL","Camila","Contreras","1990-12-06",31233118912,"prueba@gmail.com")).then(res=>{
      respuesta=res as string;
    }).catch(err=>{
      respuesta=err as string;

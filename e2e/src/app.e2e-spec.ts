@@ -11,7 +11,13 @@ describe('Proyecto Agenda escolar', () => {
     page = new AppPage();
     
   });
-/*
+
+
+
+
+
+  
+
    it('Debe iniciar sesión como Coordinador', async () => {
     await page.navigateToRoot();
     await element(by.css("select[name='selectTipoUsuario']")).click().then(res=>{
@@ -24,25 +30,30 @@ describe('Proyecto Agenda escolar', () => {
     await browser.sleep(2000);
     await element(by.css("button[name='btnLogin']")).click();
     await browser.sleep(2000);
-    //await browser.waitForAngularEnabled(true);
-    //await browser.wait(element(by.css("button[name='btnLogin']")).click(), 5 * 1000, 'Server timeout');
-  /*  await browser.wait(
-      ExpectedConditions.presenceOf(element(by.css("div[name='divGestionGrados']"))),
-      5*1000, 'element is not present');
-      
+
   });
+
+
+    it('Debe crear un docente', async () => {
+    await page.navigateTo("gestion-asignaturas");
+  });
+
+  it('Debe crear un grado', async () => {
+    await page.navigateTo("gestion-docentes");
+  });
+
+  /*
 
   it('Debe crear una asignatura', async () => {
     await page.navigateTo("gestion-asignaturas");
-    await element(by.css("input[name='nombre']")).sendKeys("Español");
+    await element(by.css("input[name='nombre']")).sendKeys("Eduación fisica");
     await browser.sleep(2000);
     await element(by.css("button[name='guardar']")).click();
     await browser.sleep(3500);
     await page.navigateTo("menu-admin");
     await browser.sleep(2000);
   });
-*/
-/*
+
   it('Debe crear un docente', async () => {
     await page.navigateTo("gestion-docentes");
     await element(by.css("input[name='idDocente']")).sendKeys("1074321423");
@@ -58,9 +69,9 @@ describe('Proyecto Agenda escolar', () => {
     await element(by.css("input[name='inputCorreoDocente']")).sendKeys("Ramiro.hoz@gmail.com");
     await browser.sleep(1000);
     await element(by.css("button[name='btnguardar']")).click();
-    await browser.sleep(3500);
+    await browser.sleep(5000);
     await page.navigateTo("menu-admin");
-    await browser.sleep(1500);
+    await browser.sleep(2000);
   });
 
 
@@ -80,15 +91,14 @@ describe('Proyecto Agenda escolar', () => {
     await page.navigateTo("menu-admin");
     await browser.sleep(2000);
   });
-  */
-
+ 
   it('Debe iniciar sesión como Docente', async () => {
     await page.navigateToRoot();
     await element(by.css("select[name='selectTipoUsuario']")).click().then(res=>{
       element(by.css("option[value='docente']")).click();
     });
     await browser.sleep(1000);
-    await element(by.css("input[name='lg_username']")).sendKeys("Ramiro.hoz@gmail.com");
+    await element(by.css("input[name='lg_username']")).sendKeys("ramiro.hoz@gmail.com");
     await browser.sleep(1000);
     await element(by.css("input[name='lg_password']")).sendKeys("1074321423");
     await browser.sleep(1500);
@@ -127,6 +137,7 @@ describe('Proyecto Agenda escolar', () => {
     await page.navigateTo("menu-docente");
     await browser.sleep(2000);
   });
+  */
 
 
   afterEach(async () => {
@@ -136,4 +147,5 @@ describe('Proyecto Agenda escolar', () => {
       level: logging.Level.SEVERE,
     } as logging.Entry));
   });
+ 
 });

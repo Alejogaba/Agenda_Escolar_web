@@ -8,6 +8,7 @@ import { AsignaturasService } from 'src/app/servicios/asignaturas.service';
 import { CalificacionesService } from 'src/app/servicios/calificaciones.service';
 import { CursosService } from 'src/app/servicios/cursos.service';
 import { formatDate } from '@angular/common';
+import { GlobalService } from 'src/app/servicios/global.service';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class ConsultaNotaAlumnoComponent implements OnInit {
   listaCursos:any = [];
   listaAsignaturas:any = [];
   listaPeriodos:any[] = [];
+  isHidden=false;
   sumaPeriodos:number[] = [];
   nombreAsignatura:string|null="No definido";
   fecha:string = formatDate(new Date(), 'dd/MM/yyyy', 'en');
@@ -32,7 +34,7 @@ export class ConsultaNotaAlumnoComponent implements OnInit {
 
   constructor(private calificacionesService:CalificacionesService,
     private asignaturaService:AsignaturasService, private alumnoService:AlumnosService
-    ,private cursoService:CursosService) { }
+    ,private cursoService:CursosService,private globalService:GlobalService) { }
 
   ngOnInit(): void {
     this.cargarAsignaturas();
@@ -70,8 +72,16 @@ export class ConsultaNotaAlumnoComponent implements OnInit {
 
 
   async cargarDatos(){
+    this.limpiar();
     await this.cargarNotas();
     await this.calcularTotalPeriodo(this.sumaPeriodos);
+    if(this.listaNotas!=[]||this.listaNotas!=null||this.listaNotas.length()!=0){
+      this.isHidden=true;
+     // this.globalService.showInfo("No hay notas registradas");
+    }
+    else{
+    this.isHidden=false;
+  }
     console.log("datos cargados")
     console.log(this.listaNotas)
   }
@@ -105,7 +115,7 @@ export class ConsultaNotaAlumnoComponent implements OnInit {
   async listarNotas() {
     
     return new Promise((resolve,rejects)=>{
-      this.calificacionesService.getCalificaciones().subscribe(notas=>{
+      this.calificacionesService.getCalificaciones_x_Asignatura(this.idAsignaturaSeleccionada).subscribe(notas=>{
         if(notas!=null){
           this.listaNotas = notas;
           resolve("ok")
@@ -178,6 +188,7 @@ cargarCursos() {
 }
 
 limpiar(){
+
   this.listaNotas = [];
   this.listaPeriodos = [];
 }

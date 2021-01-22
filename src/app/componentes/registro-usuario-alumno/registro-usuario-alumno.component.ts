@@ -53,7 +53,7 @@ export class RegistroUsuarioAlumnoComponent implements OnInit {
   guardarAlumno(){
     this.alumnoService.sendtoFirebase(this.alumno).then(res=>{
       console.log("Se guardo el alumno con exitó");
-      this.authService.createAccount(this.alumno.correo_electronico,this.alumno.id?.toString(),"alumno").then(res=>{
+      this.authService.createAccount(this.alumno.correo_electronico,this.alumno.id?.toString()).then(res=>{
         console.log("Cuenta creada con exitó");
         this.usuarioService.sendtoFirebases(this.alumno.id,this.alumno.correo_electronico,this.alumno.id,"alumno").then(res=>{
           console.log("Se creo el usuario con exitó");

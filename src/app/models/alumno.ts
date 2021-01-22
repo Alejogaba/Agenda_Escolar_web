@@ -3,11 +3,11 @@ id:string;
 idCurso:string;
 nombres:string;
 apellidos:string;
-fecha_nacimiento:Date|null;
+fecha_nacimiento:string|null;
 telefono:number|null;
 correo_electronico:string;
 
-constructor(id:string,idCurso:string,nombres:string,apellidos:string,fecha_nacimiento:Date|null,telefono:number|null,correo_electronico:string){
+constructor(id:string,idCurso:string,nombres:string,apellidos:string,fecha_nacimiento:string|null,telefono:number|null,correo_electronico:string){
     this.id=id;
     this.idCurso=idCurso;
     this.apellidos=apellidos;

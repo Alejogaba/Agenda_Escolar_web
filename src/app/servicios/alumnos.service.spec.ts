@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { AngularFireModule } from '@angular/fire';
 import { firebaseConfig } from 'src/environments/environment';
@@ -19,12 +20,12 @@ describe('AlumnosService', () => {
   });
   it('Debe crear un alumno', async () => {
     let respuesta:string="";
-   await service.sendtoFirebase(new Alumno("123456780","CURSO_A","Carlos","Mendoza",new Date,31233118912,"prueba@gmail.com")).then(res=>{
+   await service.sendtoFirebase(new Alumno("123456780","CURSO_A","Carlos","Mendoza",'2009-11-11',31233118912,"prueba@gmail.com")).then(res=>{
      respuesta=res as string;
    }).catch(err=>{
      respuesta=err as string;
    })
-   expect(respuesta).toEqual("oks");
+   expect(respuesta).toEqual("ok");
  });
 
  it('Debe eliminar a un alumno', async () => {

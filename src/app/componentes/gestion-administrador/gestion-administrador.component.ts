@@ -50,16 +50,12 @@ export class GestionAdministradorComponent implements OnInit {
     if(!this.inputNombreMode){
       this.administradorService.sendtoFirebase(this.administrador).then(res=>{
         console.log("Se guardo el coordinador con exitó");
-        this.authService.createAccount(this.administrador.correo_electronico,this.password?.toString(),"admin").then(res=>{
+        this.authService.createAccount(this.administrador.correo_electronico,this.password?.toString()).then(res=>{
           console.log("Cuenta creada con exitó");
-          this.usuarioService.sendtoFirebases(this.administrador.id,this.administrador.correo_electronico,this.administrador.id,"admin").then(res=>{
+          this.globalService.showSuccess("Cuenta creada con exitó");
+          this.usuarioService.sendtoFirebases(this.administrador.id,this.administrador.correo_electronico,this.password,"admin").then(res=>{
             console.log("Se creo el usuario con exitó");
             this.globalService.showSuccess("Se guardo el coordinador con exitó");
-            setTimeout(() => {
-              this.globalService.showInfo("Credenciales para iniciar sesión:\n"+
-              "Correo electrónico:"+this.administrador.correo_electronico+
-              "\nContraseña:"+this.password)
-          }, 3000);
             this.limpiar();
           }).catch(err=>{
             console.error(err)

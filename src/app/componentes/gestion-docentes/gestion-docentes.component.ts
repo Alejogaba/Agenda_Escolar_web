@@ -104,11 +104,14 @@ export class GestionDocentesComponent implements OnInit {
       trace.start();
       await this.docenteService.sendtoFirebase(this.docente).then(res=>{
         console.log("Se guardo el docente con exitó");
-        this.authService.createAccount(this.docente.correo_electronico,this.docente.id?.toString(),"docente").then(res=>{
+        this.authService.createAccount(this.docente.correo_electronico,this.docente.id?.toString()).then(res=>{
           console.log("Cuenta creada con exitó");
           this.usuarioService.sendtoFirebases(this.docente.id,this.docente.correo_electronico,this.docente.id,"docente").then(res=>{
             console.log("Se creo el usuario con exitó");
             this.globalService.showSuccess("Docente creado con exitó");
+            setTimeout(() => {
+              this.globalService.showInfo("Puede iniciar sesión con el correo electronico e identificación como contraseña")
+          }, 1000);
             this.limpiar();
           }).catch(err=>{
             console.error(err)

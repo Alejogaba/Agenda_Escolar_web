@@ -38,16 +38,12 @@ export class DocentesService {
       if(this.esVacio(docente)||docente.id==null||docente.telefono==null){
         rejects("No deje campos vacios")
       }else{
-        if(docente.id.length<8||docente.nombres.length<4||docente.apellidos.length<4
-          ||docente.telefono<10000000||docente.telefono>99999999999){
+        if(this.validarCantidadDeCaracteres(docente)){
           rejects("Cantidad incorrecta de caracteres")
         }else{
           if(!this.validarEdad(docente.fecha_nacimiento)){
             rejects("Edad no válida")
           }else{
-            if(!this.validarCorreo(docente.correo_electronico)){
-              rejects("Por favor ingrese un correo válido")
-            }else{
               if(this.buscarDocente(docente.id)!=null){
                 rejects("Este docente ya existe");
               }else{
@@ -65,7 +61,6 @@ export class DocentesService {
                   rejects("No se pudo guardar el docente\nError:"+err);
                 })
               }
-            }
           }  
         }
       }
@@ -81,11 +76,25 @@ export class DocentesService {
     }
   }
 
+
+  validarCantidadDeCaracteres(docente:Docente):boolean{
+    if(docente.telefono!=null)
+    if(docente.id.length<8||docente.nombres.length<4||docente.apellidos.length<4
+      ||docente.telefono<10000000||docente.telefono>99999999999){
+      return true
+    }else{
+      return false
+    }
+    else
+    return true
+  }
+
+
   validarCorreo(correo:string):boolean{
     return true;
   }
   
-  validarEdad(fecha:Date|null):boolean{
+  validarEdad(fecha:string|null):boolean{
     return true
   }
 

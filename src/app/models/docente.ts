@@ -3,11 +3,11 @@ export class Docente {
     idAsignatura:string;
     nombres:string;
     apellidos:string;
-    fecha_nacimiento:Date|null;
+    fecha_nacimiento:string|null;
     telefono:number|null;
     correo_electronico:string;
 
-    constructor(id:string,idAsignatura:string,nombres:string,apellidos:string,fecha_nacimiento:Date|null,
+    constructor(id:string,idAsignatura:string,nombres:string,apellidos:string,fecha_nacimiento:string|null,
         telefono:number|null,correo_electronico:string){
         this.id=id;
         this.idAsignatura=idAsignatura;

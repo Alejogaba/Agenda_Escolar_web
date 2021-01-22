@@ -19,6 +19,7 @@ export class GestionAlumnosComponent implements OnInit {
   idAlumnoSeleccionado:string="";
   listaAlumnos:any = [];
   listaCursos:any = [];
+  isHidden=false;
   inputNombreMode:boolean=false;
   alumno:Alumno=new Alumno("","","","",null,null,"");
   textoTextarea:string|null="Lista de alumnos:";
@@ -57,18 +58,15 @@ export class GestionAlumnosComponent implements OnInit {
     if(!this.inputNombreMode){
       this.alumnoService.sendtoFirebase(this.alumno).then(res=>{
         console.log("Se guardo el alumno con exitó");
-        this.authService.createAccount(this.alumno.correo_electronico,this.alumno.id?.toString(),"alumno").then(res=>{
+        this.authService.createAccount(this.alumno.correo_electronico,this.alumno.id?.toString()).then(res=>{
           console.log("Cuenta creada con exitó");
           this.usuarioService.sendtoFirebases(this.alumno.id,this.alumno.correo_electronico,this.alumno.id,"alumno").then(res=>{
             console.log("Se creo el usuario con exitó");
             this.limpiar();
             this.globalService.showSuccess("Se guardo el alumno con exitó");
             setTimeout(() => {
-              this.globalService.showInfo("Credenciales para iniciar sesión:\n"+
-              "Correo electrónico:"+this.alumno.correo_electronico+
-              "\nContraseña:"+this.alumno.id+
-              "\nPueden ser cambiadas luego de iniciar sesión")
-          }, 3000);
+              this.globalService.showInfo("Puede iniciar sesión con el correo electronico e identificación como contraseña")
+          }, 1000);
           }).catch(err=>{
             console.error(err)
             this.globalService.showError(err);
@@ -102,10 +100,9 @@ export class GestionAlumnosComponent implements OnInit {
         this.inputNombreMode=true;
         this.textoTextarea="Datos del alumno"
     setTimeout(() => {
-      if(this.alumno.fecha_nacimiento!=null)
       this.textoTextarea="Nombre: "+this.alumno.nombres+" "+this.alumno.apellidos+"\n"+
       "Identificación: "+this.alumno.id+"\n"+
-      "Fecha de nacimiento: "+formatDate(this.alumno.fecha_nacimiento?.toString(), 'dd/MM/yyyy', 'en');;
+      "Fecha de nacimiento: "+this.alumno.fecha_nacimiento;
          }, 500);
         }else{
         this.globalService.showInfo("No se encontro el alumno");

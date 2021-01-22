@@ -60,7 +60,7 @@
                     <div class="form-group">
                       <label for="inputfecha">Fecha de nacimiento</label>
                       <div class="input-group">
-                        <input class="form-control" placeholder="aaaa-mm-dd"
+                        <input type="text" class="form-control" placeholder="aaaa-mm-dd"
                                name="dp" [(ngModel)]="alumno.fecha_nacimiento" ngbDatepicker #d="ngbDatepicker">
                         <div class="input-group-append">
                           <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>

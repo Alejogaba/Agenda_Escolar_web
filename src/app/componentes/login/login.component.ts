@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmitCreateUser(){
-    this.authService.createAccount(this.email,this.password,this.role).then((res: any)=>{
+    this.authService.createAccount(this.email,this.password).then((res: any)=>{
       console.info("Cuenta creada con exito");
       this.usuarioService.sendtoFirebases("12345678",this.email,this.password,this.role);
     }).catch((err: any)=>{console.error("Hubo un error en los datos ingresados, no se pudo crear la cuenta");});
